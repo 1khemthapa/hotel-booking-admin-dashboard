@@ -50,7 +50,7 @@
             Manage rooms, reservations, staff, and hotel operations from one place.
         </p>
 
-        <a href="{{ route('hotel.login') }}" class="font-xs text-xl text-white hover:text-blue-300">Login as a hotel owner</a>
+        <a href="{{ route('hotel.login') }}" class="font-xs text-xl text-white hover:text-blue-300 border-white border px-3 py-2 rounded-xl">Login as a hotel owner</a>
     </main>
 
 </div>

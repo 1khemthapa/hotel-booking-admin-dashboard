@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Hotel\HotelBookingController;
 use App\Http\Controllers\Hotel\HotelCustomerController;
 use App\Http\Controllers\Hotel\HotelPackageController;
 use App\Http\Controllers\Hotel\HotelownerController;
+use App\Http\Controllers\Hotel\HotelRoleController;
 use App\Http\Controllers\Hotel\StaffController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +14,7 @@ Route::get('/ownerlogin', [HotelownerController::class,'login'])->name('hotel.lo
 Route::post('/owner/login', [HotelownerController::class,'store'])->name('owner.login');
     Route::get('/owner/loggedin',[HotelownerController::class,'show'])->name('owner.show');
     Route::post('/owner/logout',[HotelownerController::class,'logout'])->name('hotel.logout');
-
+Route::get('/staff-dashboard',[HotelownerController::class,'index'])->name('staff.show');
 Route::prefix('owner')->middleware('auth:hotels')->group(function () {
 
 
@@ -36,7 +38,7 @@ Route::prefix('owner')->middleware('auth:hotels')->group(function () {
         Route::get('/customers/{id}/edit', [HotelCustomerController::class, 'edit'])->name('hotelcustomers.edit');
         Route::post('/customers/{id}', [HotelCustomerController::class, 'update'])->name('hotelcustomers.update');
         Route::delete('/customers/{id}', [HotelCustomerController::class, 'destroy'])->name('hotelcustomers.destroy');
-        
+
           Route::get('/staffs', [StaffController::class, 'index'])->name('hotelstaffs.index');
         Route::get('/staffs/create', [StaffController::class, 'create'])->name('hotelstaffs.create');
         Route::post('/staffs/store', [StaffController::class, 'store'])->name('hotelstaffs.store');
@@ -44,5 +46,10 @@ Route::prefix('owner')->middleware('auth:hotels')->group(function () {
         Route::post('/staffs/{id}', [StaffController::class, 'update'])->name('hotelstaffs.update');
         Route::delete('/staffs/{id}', [StaffController::class, 'destroy'])->name('hotelstaffs.destroy');
 
-
+        Route::get('/hotelrole',[HotelRoleController::class,'index'])->name('hotelroles.index');
+        Route::get('/hotelrole/create',[HotelRoleController::class,'create'])->name('hotelroles.create');
+        Route::post('hotelrole/store',[HotelRoleController::class,'store'])->name('hotelroles.store');
+        Route::get('hotelrole/{id}/edit',[HotelRoleController::class,'edit'])->name('hotelroles.edit');
+        Route::post('hotelrole/{id}',[HotelRoleController::class,'update'])->name('hotelroles.update');
+        Route::delete('hotelrole/{id}',[HotelRoleController::class,'destroy'])->name('hotelroles.destroy');
 });

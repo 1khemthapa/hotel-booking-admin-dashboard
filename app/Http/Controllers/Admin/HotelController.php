@@ -54,9 +54,13 @@ return [
             'address'=>'required',
             'email'=>'required',
             'username'=>'required|unique:hotels,username',
-            'owner_id'=>'sometimes|nullable'
+            'owner_id'=>'sometimes|nullable',
+            'role'=>'required|exists:roles,name'
 
         ]);
+        if ($validator->fails()) {
+    return back()->withErrors($validator)->withInput();
+}
         $hotel=Hotel::create([
             'name'=>$request->name,
             'contact'=>$request->contact,
@@ -69,7 +73,7 @@ return [
 
         ]);
 
-
+         $hotel->assignRole($request->role);
         return redirect()->route('hotels.index')->with('success','Hotel created successfully');
     }
 
@@ -101,7 +105,8 @@ return [
             'contact'=>'required',
             'address'=>'required',
             'email'=>'required',
-            'owner_id'=>'sometimes|nullable'
+            'owner_id'=>'sometimes|nullable',
+             'role' => 'required|exists:roles,name',
 
 
         ]);
@@ -116,7 +121,7 @@ return [
             $hotel->remarks=$request->remarks;
             $hotel->owner_id=$request->owner_id;
             $hotel->save();
-
+        $hotel->syncRoles([$request->role]);
             return redirect()->route('hotels.index')->with('success','Hotel updated successfully');
 
     }

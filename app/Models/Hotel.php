@@ -7,10 +7,13 @@ use App\Models\Package;
 use Illuminate\Foundation\Auth\User as Authenticatable;  // Important to extend this
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Guard;
+use Spatie\Permission\Traits\HasRoles;
 
 class Hotel extends Authenticatable
 {
+    use HasRoles;
     protected $guard='hotels';
+    protected $guard_name='hotels';
     protected $fillable = [
         'type',
         'name',

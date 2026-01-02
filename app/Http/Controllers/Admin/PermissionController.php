@@ -35,10 +35,14 @@ class PermissionController extends Controller implements HasMiddleware
     //This method will insert a permission in DB
     public function store(Request $request){
         $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:permissions'
+            'name'=>'required|unique:permissions',
+            'guard_name'=>'required|string|in:web,hotels',
         ]);
         if($validator->passes()){
-            Permission::create(['name'=>$request->name]);
+            Permission::create([
+                'name'=>$request->name,
+                'guard_name'=>$request->guard_name,
+            ]);
 
             return redirect()->route('permissions.index')->with('success','Permission added successfully');
 

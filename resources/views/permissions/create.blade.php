@@ -23,6 +23,14 @@
 
                             @enderror
                             </div>
+                            <div>
+                                <label for="guard_name">Guard_name</label>
+                                <select name="guard_name" id="guard_name">
+                                    <option value="">Select option</option>
+                                    <option value="web">Web</option>
+                                    <option value="hotels">Hotel</option>
+                                </select>
+                            </div>
                         <button class="bg-slate-700 text-sm rounded-md px-5 py-2 text-white">Save</button>
                         </div>
                     </form>

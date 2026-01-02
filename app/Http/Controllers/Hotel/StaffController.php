@@ -35,29 +35,30 @@ class StaffController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $hotelId=Auth::guard('hotels')->id();
+        public function store(Request $request)
+        {
+            $hotelId=Auth::guard('hotels')->id();
 
-        $validator=Validator::make($request->all(),[
-            'name'=>'required|max:255',
-            'email'=>'required',
-            'contact'=>'required|max:20',
-            'address'=>'required',
-            'password'=>'required|min:8',
-            'hotel_id'=>'required|exists'
+            $validator=Validator::make($request->all(),[
+                'name'=>'required|max:255',
+                'email'=>'required',
+                'contact'=>'required|max:20',
+                'address'=>'required',
+                'password'=>'required|min:8',
+                'hotel_id'=>'required|exists'
 
-        ]);
-        Staff::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'contact'=>$request->contact,
-            'password'=>$request->password,
-            'address'=>$request->address,
-            'hotel_id'=>$hotelId
-        ]);
-        return redirect()->route('hotelstaffs.index')->with('success','Staffs created successfully');
-    }
+            ]);
+        $staff=  Staff::create([
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'contact'=>$request->contact,
+                'password'=>bcrypt('password'),
+                'address'=>$request->address,
+                'hotel_id'=>$hotelId
+            ]);
+            $staff->assignRole($request->role);
+            return redirect()->route('hotelstaffs.index')->with('success','Staffs created successfully');
+        }
 
     /**
      * Display the specified resource.

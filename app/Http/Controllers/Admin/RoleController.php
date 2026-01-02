@@ -24,7 +24,8 @@ class RoleController extends Controller //implements HasMiddleware
      */
     public function index()
     {
-        $roles = Role::orderBy('name', 'asc')
+        $roles = Role::where('guard_name','web')
+        ->orderBy('name', 'asc')
     ->orderBy('id', 'asc')
     ->paginate(10);
 
@@ -47,7 +48,8 @@ class RoleController extends Controller //implements HasMiddleware
     public function store(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:roles'
+            'name'=>'required|unique:roles',
+            'guard' => 'required|in:web,hotels',
         ]);
         if($validator->passes()){
 
