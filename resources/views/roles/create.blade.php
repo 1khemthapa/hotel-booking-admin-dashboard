@@ -17,13 +17,13 @@
                         <div>
                             <label for="" class="text-sm font-medium">Name</label>
                             <div class="my-3">
-                                <input value="{{ old('name') }}" name="name" type="text"
+                                <input value="{{ old('display_name') }}" name="display_name" type="text"
                                     placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
-                                @error('name')
+                                @error('display_name')
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
                                 @enderror
                             </div>
-                            
+
                             <div class="grid grid-cols-4 ">
                                 @if ($permissions->isNotEmpty())
                                     @foreach ($permissions as $permission)

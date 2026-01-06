@@ -33,7 +33,7 @@ class HotelownerController extends Controller
 
             if($request->user_type=="staffs"){
                 if(Auth::guard('staffs')->attempt($credentials)){
-                    return redirect()->intended('/staff-dashboard');
+                    return redirect()->route('staff.dashboard');
                 }
             }
             else if($request->user_type=="hotels"){
@@ -56,6 +56,6 @@ class HotelownerController extends Controller
         Auth::guard('hotels','staffs')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/ownerlogin')->with('success','Log out successfully');
+        return redirect('/stafflogin')->with('success','Log out successfully');
     }
 }

@@ -72,7 +72,7 @@
     </div>
 
 
-    <div class="mb-4">
+    {{-- <div class="mb-4">
     <label class="block text-sm font-medium mb-1">
         Role
     </label>
@@ -87,7 +87,7 @@
 
         @endforeach
     </select>
-</div>
+</div> --}}
 
 
 

@@ -10,13 +10,13 @@ use App\Http\Controllers\Hotel\StaffController;
 use Illuminate\Support\Facades\Route;
 
 //login route
-Route::get('/ownerlogin', [HotelownerController::class,'login'])->name('hotel.login');
-Route::post('/owner/login', [HotelownerController::class,'store'])->name('owner.login');
-    Route::get('/owner/loggedin',[HotelownerController::class,'show'])->name('owner.show');
-    Route::post('/owner/logout',[HotelownerController::class,'logout'])->name('hotel.logout');
-Route::get('/staff-dashboard',[HotelownerController::class,'index'])->name('staff.show');
+Route::get('/stafflogin', [HotelownerController::class,'login'])->name('hotel.login');
+Route::post('/staff/login', [HotelownerController::class,'store'])->name('owner.login');
+Route::post('/owner/logout',[HotelownerController::class,'logout'])->name('hotel.logout');
+// Route::get('/staff-dashboard',[HotelownerController::class,'index'])->name('staff.show');
 Route::prefix('owner')->middleware('auth:hotels')->group(function () {
 
+    Route::get('/owner/loggedin',[HotelownerController::class,'show'])->name('owner.show');
 
      Route::get('/packages',[HotelPackageController::class,'index'])->name('hotelpackages.index');
         Route::get('/packages/create',[HotelPackageController::class,'create'])->name('hotelpackages.create');
@@ -53,3 +53,27 @@ Route::prefix('owner')->middleware('auth:hotels')->group(function () {
         Route::post('hotelrole/{id}',[HotelRoleController::class,'update'])->name('hotelroles.update');
         Route::delete('hotelrole/{id}',[HotelRoleController::class,'destroy'])->name('hotelroles.destroy');
 });
+
+// Route::prefix('staff')->middleware('auth:staffs')->group(function(){
+// Route::get('/packages',[HotelPackageController::class,'index'])->name('hotelpackages.index');
+//         Route::get('/packages/create',[HotelPackageController::class,'create'])->name('hotelpackages.create');
+//         Route::post('/packages/store',[HotelPackageController::class,'store'])->name('hotelpackages.store');
+//         Route::get('/packages/{id}/edit',[HotelPackageController::class,'edit'])->name('hotelpackages.edit');
+//         Route::post('/packages/{id}',[HotelPackageController::class,'update'])->name('hotelpackages.update');
+//         Route::delete('/packages/{id}',[HotelPackageController::class,'destroy'])->name('hotelpackages.destroy');
+
+//           Route::get('/bookings', [HotelBookingController::class, 'index'])->name('hotelbookings.index');
+//         Route::get('/bookings/create', [HotelBookingController::class, 'create'])->name('hotelbookings.create');
+//         Route::post('/bookings/store', [HotelBookingController::class, 'store'])->name('hotelbookings.store');
+//         Route::get('/bookings/{id}/edit', [HotelBookingController::class, 'edit'])->name('hotelbookings.edit');
+//         Route::post('/bookings/{id}', [HotelBookingController::class, 'update'])->name('hotelbookings.update');
+//         Route::delete('/bookings/{id}', [HotelBookingController::class, 'destroy'])->name('hotelbookings.destroy');
+
+//           Route::get('/customers', [HotelCustomerController::class, 'index'])->name('hotelcustomers.index');
+//         Route::get('/customers/create', [HotelCustomerController::class, 'create'])->name('hotelcustomers.create');
+//         Route::post('/customers/store', [HotelCustomerController::class, 'store'])->name('hotelcustomers.store');
+//         Route::get('/customers/{id}/edit', [HotelCustomerController::class, 'edit'])->name('hotelcustomers.edit');
+//         Route::post('/customers/{id}', [HotelCustomerController::class, 'update'])->name('hotelcustomers.update');
+//         Route::delete('/customers/{id}', [HotelCustomerController::class, 'destroy'])->name('hotelcustomers.destroy');
+
+// });

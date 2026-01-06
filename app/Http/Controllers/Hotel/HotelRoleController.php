@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Hotel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
@@ -10,6 +11,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class HotelRoleController extends Controller //implements HasMiddleware
 {
@@ -24,22 +26,28 @@ class HotelRoleController extends Controller //implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    public function index(){
-        $permissions = Permission::where('guard_name', 'hotels')->get();
-        $roles = Role::orderBy('name', 'asc')->where('guard_name',"hotels")
-        ->orderBy('id', 'asc')
-        ->paginate(10);
+    public function index()
+    {
+        $hotelId = Auth::guard('hotels')->id(); // current hotel
+        $roles = Role::where('guard_name', 'staffs')
+            ->where('hotel_id', $hotelId)
+            ->orderBy('display_name', 'asc')
+            ->paginate(10);
+
+        //     $roles = Role::where('guard_name','staffs')
+        //     ->orderBy('name', 'asc')
+        // ->orderBy('id', 'asc')
+        // ->paginate(10);
 
         return view('Hotel.Roles.listroles', compact('roles'));
     }
-
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $permissions = Permission::where('guard_name','hotels')->get();
+        $permissions = Permission::where('guard_name', 'staffs')->get();
         return view('Hotel.Roles.createroles', ['permissions' => $permissions]);
     }
 
@@ -48,64 +56,50 @@ class HotelRoleController extends Controller //implements HasMiddleware
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'display_name' => 'required|unique:roles',
 
-        // $hotelId=Auth::guard('hotels')->id();
-
-        // if(Role::where('name',$request->name)
-        //     ->where('guard_name','staffs')
-        // ->where('hotel_id',$hotelId)
-        // ->exists()){
-        //     return back()->withErrors('error','role already exists');
-        // }
-        // if ($validator->passes()) {
-
-        //     $role = Role::create(['name' => $request->name,
-        //     'guard_name'=>'staffs',
-        //     'hotel_id'=>$hotelId
-        // ]
-
-        // );
-        // dd($role);
-        // return back()->with('success','role created successfully');
- $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:roles'
         ]);
-        if($validator->passes()){
+        if ($validator->passes()) {
+            $hotelId = Auth::guard('hotels')->id();
+            $role = Role::create([
+                'display_name' => $request->display_name,
+                'name' => Str::slug($request->display_name),
+                'guard_name' => 'staffs',
+                'hotel_id' => $hotelId,
+            ]);
 
-          $role= Role::where('guard_name','hotels')->create(['name'=>$request->name]);
 
-            if(!empty($request->permission)){
-                foreach($request->permission as $name){
+            if (!empty($request->permission)) {
+                foreach ($request->permission as $name) {
                     $role->givePermissionTo($name);
                 }
             }
 
-            return redirect()->route('hotelroles.index')->with('success','Role added successfully');
-
-
-        }
-        else{
+            return redirect()->route('hotelroles.index')->with('success', 'Role added successfully');
+        } else {
             return redirect()->route('hotelroles.create')->withInput()->withErrors($validator);
         }
     }
     public function edit($id)
     {
         $role = Role::findorFail($id);
-        $haspermissions = $role->permissions->pluck('name');
-        $permissions = Permission::where('guard_name','hotels')->get();
+        $haspermissions = $role->permissions->pluck('display_name');
+        $permissions = Permission::where('guard_name', 'staffs')->orderBy('display_name', 'ASC')->get();
         return view('Hotel.Roles.editroles', compact('role', 'permissions', 'haspermissions'));
     }
 
     public function update($id, Request $request)
     {
-        $role = Role::where('guard_name','hotels')->findorFail($id);
+        $role = Role::findorFail($id);
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:roles,name,' . $id . ',id'
+            'display_name' => 'required',
         ]);
         if ($validator->passes()) {
+            $role->display_name = $request->display_name;
+            $role->name=Str::slug($request->display_name);
 
-
-            $role->name = $request->name;
             $role->save();
             if (!empty($request->permission)) {
                 $role->syncPermissions($request->permission);

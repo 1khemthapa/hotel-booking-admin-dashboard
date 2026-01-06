@@ -20,6 +20,7 @@
                         <th class="px-6 py-2 rounded-md text-left">Name</th>
                         <th class="px-6 py-2 rounded-md text-left">Contact</th>
                         <th class="px-6 py-2 rounded-md text-left">Email</th>
+                        <th class="px-6 py-2 rounded-md text-left">Role</th>
                         <th class="px-6 py-2 rounded-md text-left">Address</th>
                         <th class="px-6 py-2 rounded-md text-center">Action</th>
                     </tr>
@@ -33,6 +34,7 @@
                         <td class="px-6 py-2 text-left ">{{$staff->name}}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->contact}}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->email}}</td>
+                        <td  class="px-6 py-2 text-left">{{ $staff->getRoleNames()->join(', ') }}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->address}}</td>
 
 

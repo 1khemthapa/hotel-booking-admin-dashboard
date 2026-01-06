@@ -96,3 +96,4 @@ Route::post('/hotel/store', [FrontendController::class, 'store'])->name('fronten
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/hotel.php';
+require __DIR__ . '/staff.php';

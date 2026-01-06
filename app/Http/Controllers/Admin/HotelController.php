@@ -17,10 +17,10 @@ class HotelController extends Controller implements HasMiddleware
     public static function middleware():array
     {
 return [
-    new Middleware('permission:view hotels',only:['index']),
-            new Middleware('permission:edit hotels',only:['edit']),
-            new Middleware('permission:create hotels',only:['create']),
-            new Middleware('permission:delete hotels',only:['destroy']),
+    new Middleware('permission:view-hotel',only:['index']),
+            new Middleware('permission:edit-hotel',only:['edit']),
+            new Middleware('permission:create-hotel',only:['create']),
+            new Middleware('permission:delete-hotel',only:['destroy']),
 ];
     }
     /**
@@ -53,9 +53,7 @@ return [
             'contact'=>'required',
             'address'=>'required',
             'email'=>'required',
-            'username'=>'required|unique:hotels,username',
-            'owner_id'=>'sometimes|nullable',
-            'role'=>'required|exists:roles,name'
+            'username'=>'required',
 
         ]);
         if ($validator->fails()) {
@@ -69,11 +67,10 @@ return [
             'username'=>$request->username,
             'password'=>bcrypt('password'),
             'status'=>$request->status,
-            'owner_id'=>$request->owner_id,
 
         ]);
 
-         $hotel->assignRole($request->role);
+        //  $hotel->assignRole($request->role);
         return redirect()->route('hotels.index')->with('success','Hotel created successfully');
     }
 
@@ -105,9 +102,6 @@ return [
             'contact'=>'required',
             'address'=>'required',
             'email'=>'required',
-            'owner_id'=>'sometimes|nullable',
-             'role' => 'required|exists:roles,name',
-
 
         ]);
         if($validator->fails()){
@@ -119,7 +113,7 @@ return [
             $hotel->email=$request->email;
             $hotel->status=$request->status;
             $hotel->remarks=$request->remarks;
-            $hotel->owner_id=$request->owner_id;
+
             $hotel->save();
         $hotel->syncRoles([$request->role]);
             return redirect()->route('hotels.index')->with('success','Hotel updated successfully');

@@ -6,19 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller //implements HasMiddleware
+class RoleController extends Controller implements HasMiddleware
 {
-    // public static function middleware(): array
-    // {return[
-    //     new Middleware('permission:view roles',only:['index']),
-    //     new Middleware('permission:edit roles',only:['edit']),
-    //     new Middleware('permission:create roles',only:['create']),
-    //     new Middleware('permission:delete roles',only:['destroy']),
-    // ];
-    // }
+    public static function middleware(): array
+    {return[
+        new Middleware('permission:view-role',only:['index']),
+        new Middleware('permission:edit-role',only:['edit']),
+        new Middleware('permission:create-role',only:['create']),
+        new Middleware('permission:delete-role',only:['destroy']),
+    ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -37,7 +38,7 @@ class RoleController extends Controller //implements HasMiddleware
      */
     public function create()
     {
-        $permissions= Permission::orderBy('name','ASC')->get();
+        $permissions= Permission::where('guard_name','web')->orderBy('name','ASC')->get();
         return view('roles.create',['permissions'=>$permissions]);
 
     }
@@ -47,19 +48,27 @@ class RoleController extends Controller //implements HasMiddleware
      */
     public function store(Request $request)
     {
+
         $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:roles',
-            'guard' => 'required|in:web,hotels',
+            'display_name'=>'required|unique:roles',
+
         ]);
+
+
         if($validator->passes()){
 
-          $role= Role::create(['name'=>$request->name]);
+          $role= Role::create([
+              'display_name'=>$request->display_name,
+            'name'=>Str::slug($request->display_name),
+            ]);
+
 
             if(!empty($request->permission)){
                 foreach($request->permission as $name){
                     $role->givePermissionTo($name);
                 }
             }
+
 
             return redirect()->route('roles.index')->with('success','Role added successfully');
 
@@ -72,26 +81,29 @@ class RoleController extends Controller //implements HasMiddleware
     public function edit($id){
         $role=Role::findorFail($id);
         $haspermissions=$role->permissions->pluck('name');
-        $permissions= Permission::orderBy('name','ASC')->get();
+        $permissions= Permission::where('guard_name','web')->orderBy('name','ASC')->get();
         return view('roles.edit',compact('role','permissions','haspermissions'));
     }
 
     public function update($id,Request $request){
+
         $role=Role::findorFail($id);
         $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:roles,name,'.$id.',id'
+            'display_name'=>'required'
         ]);
         if($validator->passes()){
-
-
-            $role->name=$request->name;
+            $role->display_name=$request->display_name;
+            $role->name=Str::slug($request->display_name);
             $role->save();
+
             if(!empty($request->permission)){
+                if($request->permission ){
                 $role->syncPermissions($request->permission);
                 }
                 else{
                     $role->syncPermissions([]);
                 }
+            }
             return redirect()->route('roles.index')->with('success','Role updated successfully');
         }
         else{

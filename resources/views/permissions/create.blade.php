@@ -17,8 +17,8 @@
                         <div>
                             <label for="" class="text-sm font-medium">Name</label>
                             <div class="my-3">
-                            <input value="{{ old('name') }}" name="name" type="text" placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
-                            @error('name')
+                            <input value="{{ old('display_name') }}" name="display_name" type="text" placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                            @error('display_name')
                                 <p class="text-red-400 font-medium">{{ $message }}</p>
 
                             @enderror
@@ -29,6 +29,7 @@
                                     <option value="">Select option</option>
                                     <option value="web">Web</option>
                                     <option value="hotels">Hotel</option>
+                                    <option value="staffs">Staffs</option>
                                 </select>
                             </div>
                         <button class="bg-slate-700 text-sm rounded-md px-5 py-2 text-white">Save</button>

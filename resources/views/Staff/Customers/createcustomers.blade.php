@@ -1,16 +1,13 @@
-<x-hotel-layout>
+<x-staff-layout>
     <x-slot name="header">
         <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight" >
          AddCustomer
         </h2>
-        @can('create customers')
-
-        <a href="{{ route('hotelcustomers.index') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Back</a>
-        @endcan
-    </div>
+        <a href="{{ route('staffcustomers.index') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Back</a>
+        </div>
     </x-slot>
-   <form action="{{ route('hotelcustomers.store') }}"
+   <form action="{{ route('staffcustomers.store') }}"
       method="POST"
       class="max-w-md mx-auto mt-2 bg-white p-6 rounded-lg shadow">
     @csrf
@@ -74,4 +71,4 @@
 </form>
 
 
-</x-hotel-layout>
+</x-staff-layout>

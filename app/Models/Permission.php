@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Role extends Model
+class Permission extends Model
 {
     protected $fillable = ['name','display_name',
     'guard_name'
 ];
 
-    // public function hotel(){
-    //     return $this->belongsTo(Hotel::class);
-    // }
+   
 }

@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Str;
 
-class PermissionController extends Controller implements HasMiddleware
+class PermissionController extends Controller  implements HasMiddleware
 {
     public static function middleware():array
     {
         return [
-            new Middleware('permission:view permissions',only:['index']),
-            new Middleware('permission:edit permissions',only:['edit']),
-            new Middleware('permission:create permissions',only:['create']),
-            new Middleware('permission:delete permissions',only:['destroy']),
+            new Middleware('permission:view-permission',only:['index']),
+            new Middleware('permission:edit-permission',only:['edit']),
+            new Middleware('permission:create-permission',only:['create']),
+            new Middleware('permission:delete-permission',only:['destroy']),
         ];
     }
 
@@ -35,12 +36,13 @@ class PermissionController extends Controller implements HasMiddleware
     //This method will insert a permission in DB
     public function store(Request $request){
         $validator=Validator::make($request->all(),[
-            'name'=>'required|unique:permissions',
-            'guard_name'=>'required|string|in:web,hotels',
+            'display_name'=>'required|unique:permissions',
+            'guard_name'=>'required|string|in:web,hotels,staffs',
         ]);
         if($validator->passes()){
             Permission::create([
-                'name'=>$request->name,
+                'display_name'=>$request->display_name,
+                'name'=>Str::slug($request->display_name),
                 'guard_name'=>$request->guard_name,
             ]);
 

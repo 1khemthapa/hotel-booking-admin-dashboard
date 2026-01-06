@@ -1,14 +1,14 @@
-<x-hotel-layout>
+<x-staff-layout>
     <x-slot name="header">
         <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Customers') }}
         </h2>
+        @can('create-customer')
 
-
-        <a href="{{ route('hotelcustomers.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Customer</a>
-
-    </div>
+        <a href="{{ route('staffcustomers.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Customer</a>
+        @endcan
+        </div>
 
     </x-slot>
 
@@ -39,21 +39,21 @@
 
 
                         <td class="px-6 py-2 flex items-center  justify-center">
+                            @can('edit-customer')
 
+                            <a href="{{ route('staffcustomers.edit',$customer->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                            @endcan
 
-                            <a href="{{ route('hotelcustomers.edit',$customer->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
-
-
-                            <form action="{{ route('hotelcustomers.destroy', $customer->id) }}" method="POST" >
+                            <form action="{{ route('staffcustomers.destroy', $customer->id) }}" method="POST" >
     @csrf
     @method('DELETE')
+        @can('delete-customer')
 
-
-<button type="submit" onclick="return confirm('Are you sure you want to delete');"
-class="bg-red-700 text-sm inline-block rounded-md text-white px-3 py-2 ml-2 hover:bg-red-600">
-Delete
-</button>
-
+        <button type="submit" onclick="return confirm('Are you sure you want to delete');"
+        class="bg-red-700 text-sm inline-block rounded-md text-white px-3 py-2 ml-2 hover:bg-red-600">
+        Delete
+    </button>
+    @endcan
 </form>
 
                         </td>
@@ -68,4 +68,4 @@ Delete
             </div>
         </div>
     </div>
-</x-hotel-layout>
+</x-staff-layout>

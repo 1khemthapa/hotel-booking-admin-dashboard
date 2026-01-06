@@ -10,44 +10,40 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('staff.show')" :active="request()->routeIs('staff.show')">
+                    <x-nav-link :href="route('staff.dashboard')" :active="request()->routeIs('staff.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
 
-                {{-- @can ('view packages') --}}
+                @can('view-package')
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotelpackages.index')" :active="request()->routeIs('hotelpackages.index')">
+                    <x-nav-link :href="route('staffpackages.index')" :active="request()->routeIs('staffpackages.index')">
                         {{ __('Packages') }}
                     </x-nav-link>
                 </div>
-                {{-- @endcan --}}
+                @endcan
 
-                {{-- @can ('view customers') --}}
+
+                @can('view-customer')
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotelcustomers.index')" :active="request()->routeIs('hotelcustomers.index')">
+                    <x-nav-link :href="route('staffcustomers.index')" :active="request()->routeIs('staffcustomers.index')">
                         {{ __('Customers') }}
                     </x-nav-link>
                 </div>
-                {{-- @endcan --}}
+                @endcan
 
-                {{-- @can ('view bookings') --}}
+
+                @can('view-booking')
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotelbookings.index')" :active="request()->routeIs('hotelbookings.index')">
+                    <x-nav-link :href="route('staffbookings.index')" :active="request()->routeIs('staffbookings.index')">
                         {{ __('Bookings') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotelroles.index')" :active="request()->routeIs('hotelrole.index')">
-                        {{ __('Roles') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('hotelstaffs.index')" :active="request()->routeIs('hotelstaffs.index')">
-                        {{ __('Staffs') }}
-                    </x-nav-link>
-                </div>
-                {{-- @endcan --}}
+                @endcan
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -56,7 +52,7 @@
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
 
-
+                             <div>{{ Auth::user()->name }}({{ Auth::user()->roles->pluck('name')->implode(' , ') }})</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -106,9 +102,10 @@
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            {{-- <div class="px-4">
+            <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-            </div> --}}
+                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+            </div>
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

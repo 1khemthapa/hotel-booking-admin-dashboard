@@ -4,10 +4,10 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Users') }}
         </h2>
-        {{-- @can ('create users') --}}
+        @can ('create-user')
         <a href="{{ route('users.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add User</a>
         </div>
-        {{-- @endcan --}}
+        @endcan
     </x-slot>
 
     <div class="py-12">
@@ -41,11 +41,11 @@
                         <td class="px-6 py-2 text-left w-180">
                            {{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y')}}
                         </td>
-                        {{-- @can ('edit users') --}}
+                        @can ('edit-user')
                         <td class="px-6 py-2 flex items-center  justify-center">
                             <a href="{{ route('users.edit',$user->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
-                            {{-- @endcan
-                            @can ('delete users') --}}
+                            @endcan
+                            @can ('delete-user')
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" >
     @csrf
     @method('DELETE')
@@ -55,7 +55,7 @@
         Delete
     </button>
 </form>
-{{-- @endcan --}}
+@endcan
                         </td>
                     </tr>
                     @endforeach

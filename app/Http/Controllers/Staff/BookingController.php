@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Hotel;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
@@ -14,27 +14,29 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Nullable;
 
-class HotelBookingController extends Controller //implements HasMiddleware
+class BookingController extends Controller implements HasMiddleware
 {
 
-    // public static function middleware():array
-    // {
-    //     return [
-    //         new middleware('permission:view bookings',only:['index']),
-    //         new middleware('permission:create bookings',only:['create']),
-    //         new middleware('permission:edit bookings',only:['edit']),
-    //         new middleware('permission:delete bookings',only:['destroy']),
-    //     ];
-    // }
+    public static function middleware():array
+    {
+        return [
+            new middleware('permission:view-booking',only:['index']),
+            new middleware('permission:create-booking',only:['create']),
+            new middleware('permission:edit-booking',only:['edit']),
+            new middleware('permission:delete-booking',only:['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user=Auth::guard('hotels')->user();
+        $staff=Auth::guard('staffs')->user();
+        $hotel=$staff->hotel;
+        $bookings=$hotel? $hotel->bookings:collect();
 
-        $bookings=$user->bookings;
-    return view('Hotel.bookings.listbookings',compact('bookings'));
+
+    return view('Staff.Bookings.listbookings',compact('bookings'));
     }
 
     /**
@@ -44,9 +46,8 @@ class HotelBookingController extends Controller //implements HasMiddleware
     {
         $hotels=Auth::guard('hotels')->user();
         $customers=$hotels->customers()->latest()->get();
-
         $packages=$hotels->packages()->latest()->get();
-        return view('Hotel.bookings.createbookings',compact('customers','packages'));
+        return view('Staff.Bookings.createbookings',compact('customers','packages'));
     }
 
     /**
@@ -76,7 +77,7 @@ class HotelBookingController extends Controller //implements HasMiddleware
             'check_out_date'=>$request->check_out_date,
             'notes'=>$request->notes,
         ]);
-        return redirect()->route('hotelbookings.index')->with('success','Bookings created successfully');
+        return redirect()->route('staffbookings.index')->with('success','Bookings created successfully');
     }
 
     /**
@@ -97,7 +98,7 @@ class HotelBookingController extends Controller //implements HasMiddleware
 
         $packages=$hotels->packages()->get();
         $booking=Booking::findorfail($id);
-        return view('Hotel.bookings.editbookings',compact('booking','customers','hotels','packages'));
+        return view('Staff.Bookings.editbookings',compact('booking','customers','hotels','packages'));
     }
 
     /**
@@ -118,11 +119,11 @@ class HotelBookingController extends Controller //implements HasMiddleware
 
         ]);
        if($validator->fails()){
-        return redirect()->route('hotelbookings.index')->withInput()->withErrors($validator);
+        return redirect()->route('staffbookings.index')->withInput()->withErrors($validator);
        }
        $booking->update($validator->validated(),['hotel_id'=>$booking->hotel_id]);
 
-        return redirect()->route('hotelbookings.index')->with('success','Bookings updated successfully');
+        return redirect()->route('staffbookings.index')->with('success','Bookings updated successfully');
     }
 
     /**
@@ -132,6 +133,6 @@ class HotelBookingController extends Controller //implements HasMiddleware
     {
         $booking=Booking::findorfail($id);
         $booking->delete();
-        return redirect()->route('hotelbookings.index')->with('success','Booking deleted successfully');
+        return redirect()->route('staffbookings.index')->with('success','Booking deleted successfully');
     }
 }

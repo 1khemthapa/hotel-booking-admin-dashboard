@@ -10,14 +10,14 @@ class RolePermissionSeeder extends Seeder
 {
     public function run()
     {
-        $guard = 'hotels';
+        $guard = 'staffs';
 
 
         $roles = [
             'Hotel',
         ];
 
-        
+
         $permissions = [
             'view bookings',
             'add bookings',

@@ -1,11 +1,13 @@
-<x-hotel-layout>
+<x-staff-layout>
     <x-slot name="header">
         <div class="flex justify-between">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Package') }}
         </h2>
+        @can('create-package')
 
-        <a href="{{ route('hotelpackages.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Package</a>
+        <a href="{{ route('staffpackages.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Package</a>
+        @endcan
         </div>
 
     </x-slot>
@@ -34,18 +36,21 @@
                         <td  class="px-6 py-2 text-left">{{$package->price}}</td>
 
                         <td class="px-6 py-2 flex items-center  justify-center">
-                            <a href="{{ route('hotelpackages.edit',$package->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                            @can('edit-package')
 
+                            <a href="{{ route('staffpackages.edit',$package->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
+                            @endcan
 
-
-                            <form action="{{ route('hotelpackages.destroy', $package->id) }}" method="POST" >
+                            <form action="{{ route('staffpackages.destroy', $package->id) }}" method="POST" >
     @csrf
     @method('DELETE')
+        @can('delete-package')
 
-    <button type="submit" onclick="return confirm('Are you sure you want to delete');"
+        <button type="submit" onclick="return confirm('Are you sure you want to delete');"
         class="bg-red-700 text-sm inline-block rounded-md text-white px-3 py-2 ml-2 hover:bg-red-600">
         Delete
     </button>
+    @endcan
 </form>
 
                         </td>
@@ -60,4 +65,4 @@
             </div> --}}
         </div>
     </div>
-</x-hotel-layout>
+</x-staff-layout>

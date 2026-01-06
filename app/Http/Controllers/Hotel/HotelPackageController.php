@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Hotel;
+
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
@@ -18,12 +19,12 @@ class HotelPackageController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
+    {
 
-    $user = Auth::guard('hotels')->user();
+        $user = Auth::guard('hotels')->user();
 
-        $packages=$user->packages;
-        return view('Hotel.packages.listpackage',compact('packages'));
+        $packages = $user->packages;
+        return view('Hotel.packages.listpackage', compact('packages'));
     }
 
     /**
@@ -31,9 +32,9 @@ class HotelPackageController extends Controller
      */
     public function create()
     {
-        $hotels=Hotel::get();
+        $hotels = Hotel::get();
 
-        return view('Hotel.packages.createpackage',compact('hotels'));
+        return view('Hotel.packages.createpackage', compact('hotels'));
     }
 
     /**
@@ -43,20 +44,20 @@ class HotelPackageController extends Controller
     {
         $hotelId = Auth::guard('hotels')->id();
 
-        $validator=Validator::make($request->all(),[
-            'hotel_id'=>'sometimes|nullable',
-            'package_name'=>'required|max:100',
-             'status'=>'required|in:active,inactive',
-             'price'=>'required|numeric'
+        $validator = Validator::make($request->all(), [
+            'hotel_id' => 'sometimes|nullable',
+            'package_name' => 'required|max:100',
+            'status' => 'required|in:active,inactive',
+            'price' => 'required|numeric'
         ]);
 
         Package::create([
-            'hotel_id'=>$hotelId,
-            'package_name'=>$request->package_name,
-            'status'=>$request->status,
-            'price'=>$request->price,
+            'hotel_id' => $hotelId,
+            'package_name' => $request->package_name,
+            'status' => $request->status,
+            'price' => $request->price,
         ]);
-        return redirect()->route('hotelpackages.index')->with('success','Packages created successfully');
+        return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
     }
 
     /**
@@ -72,9 +73,9 @@ class HotelPackageController extends Controller
      */
     public function edit(string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
         // $hotels=Hotel::orderBy('name')->get();
-        return view('Hotel.packages.editpackage',compact('package'));
+        return view('Hotel.packages.editpackage', compact('package'));
     }
 
     /**
@@ -82,26 +83,26 @@ class HotelPackageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
 
-         $validator=Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             // 'hotel_id'=>'required|exists:hotels,id',
-            'package_name'=>'required|max:100',
-             'status'=>'required|in:active,inactive',
-             'price'=>'required|numeric'
+            'package_name' => 'required|max:100',
+            'status' => 'required|in:active,inactive',
+            'price' => 'required|numeric'
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('hotelpackages.index')->withInput()->withErrors($validator);
         }
         // $package->hotel_id=$request->hotel_id;
 
-        $package->package_name=$request->package_name;
-        $package->status=$request->status;
-        $package->price=$request->price;
+        $package->package_name = $request->package_name;
+        $package->status = $request->status;
+        $package->price = $request->price;
         $package->save();
 
 
-        return redirect()->route('hotelpackages.index')->with('success','Packages created successfully');
+        return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
     }
 
     /**
@@ -109,8 +110,8 @@ class HotelPackageController extends Controller
      */
     public function destroy(string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
         $package->delete();
-        return redirect()->route('hotelpackages.index')->with('success','Package deleted successfully');
+        return redirect()->route('hotelpackages.index')->with('success', 'Package deleted successfully');
     }
 }

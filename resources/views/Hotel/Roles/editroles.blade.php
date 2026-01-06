@@ -17,18 +17,19 @@
                         <div>
                             <label for="" class="text-sm font-medium">Name</label>
                             <div class="my-3">
-                            <input  value="{{ old('name',$role->name) }}" name="name" type="text" placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
-                            @error('name')
+                            <input  value="{{ old('display_name',$role->display_name) }}" name="display_name" type="text" placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                            @error('display_name')
                                 <p class="text-red-400 font-medium">{{ $message }}</p>
 
                             @enderror
                             </div>
+
                            <div class="grid grid-cols-4 ">
                             @if ($permissions->isNotEmpty())
                             @foreach ($permissions as $permission )
                              <div class="mt-3">
-                            <input {{ ($haspermissions->contains($permission->name)) ? 'checked':'' }} type="checkbox" id="permission-{{ $permission->id }}" class="rounded cursor-pointer" name="permission[]" value="{{ $permission->name }}">
-                            <label class="cursor-pointer" for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
+                            <input {{ ($haspermissions->contains($permission->display_name)) ? 'checked':'' }} type="checkbox" id="permission-{{ $permission->id }}" class="rounded cursor-pointer" name="permission[]" value="{{ $permission->name }}">
+                            <label class="cursor-pointer" for="permission-{{ $permission->id }}">{{ $permission->display_name }}</label>
                         </div>
                            @endforeach
                            @endif

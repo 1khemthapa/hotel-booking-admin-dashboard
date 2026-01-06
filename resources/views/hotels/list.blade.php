@@ -4,7 +4,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Hotels') }}
         </h2>
-        @can ('create hotels')
+        @can ('create-hotel')
         <a href="{{ route('hotels.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Hotel</a>
         </div>
         @endcan
@@ -40,11 +40,11 @@
                         </td><td  class="px-6 py-2 text-left">{{$hotel->address}}</td>
                         <td  class="px-6 py-2 text-left">{{$hotel->contact}}</td>
 
-                        @can ('edit hotels')
+                        @can ('edit-hotel')
                         <td class="px-6 py-2 flex items-center  justify-center">
                             <a href="{{ route('hotels.edit',$hotel->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
                             @endcan
-                            @can ('delete hotels')
+                            @can ('delete-hotel')
                             <form action="{{ route('hotels.destroy', $hotel->id) }}" method="POST" >
     @csrf
     @method('DELETE')

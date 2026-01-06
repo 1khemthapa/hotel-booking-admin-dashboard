@@ -17,26 +17,27 @@
                         <div>
                             <label for="" class="text-sm font-medium">Name</label>
                             <div class="my-3">
-                                <input value="{{ old('name') }}" name="name" type="text"
+                                <input value="{{ old('display_name') }}" name="display_name" type="text"
                                     placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
-                                @error('name')
+                                @error('display_name')
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
                                 @enderror
                             </div>
 
-                            <div class="my-3">
+                            {{-- <div class="my-3">
                                 <label for="guard_name" class="text-xl ">Guard</label>
                                 <select name="guard_name" id="guard_name" class="rounded-md cursor-pointer">
                                     <option value="" class="cursor-pointer">Select guard</option>
                                     <option value="web" class="cursor-pointer">web</option>
                                     <option value="hotels" class="cursor-pointer">hotel</option>
+                                    <option value="staffs" class="cursor-pointer">staff</option>
                                 </select>
                                     @error('guard')
 
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror
 
-                            </div>
+                            </div> --}}
                             <div class="grid grid-cols-4 ">
                                 @if ($permissions->isNotEmpty())
                                     @foreach ($permissions as $permission)

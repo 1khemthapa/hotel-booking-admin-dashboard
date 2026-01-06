@@ -11,15 +11,15 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller implements HasMiddleware
+class UserController extends Controller //implements HasMiddleware
 {
     public static function middleware():array
     {
         return [
-            new Middleware('permission:view users',only:['index']),
-            new Middleware('permission:edit users',only:['edit']),
-            new Middleware('permission:create users',only:['create']),
-            new Middleware('permission:delete users',only:['destroy'])
+            new Middleware('permission:view-user',only:['index']),
+            new Middleware('permission:edit-user',only:['edit']),
+            new Middleware('permission:create-user',only:['create']),
+            new Middleware('permission:delete-user',only:['destroy'])
         ];
     }
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller implements HasMiddleware
     public function create()
     {
         $hotels=Hotel::latest()->get();
-        $roles=Role::all();
+        $roles=Role::where('guard_name','web')->get();
         return view('users.adduser',compact('roles','hotels'));
     }
 
@@ -81,7 +81,7 @@ class UserController extends Controller implements HasMiddleware
     public function edit(string $id)
     {
         $user=User::findorfail($id);
-        $roles=Role::orderBy('name','ASC')->get();
+        $roles=Role::where('guard_name','web')->orderBy('name','ASC')->get();
         return view('users.edit',compact('user','roles'));
     }
 

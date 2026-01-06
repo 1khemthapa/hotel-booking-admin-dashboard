@@ -44,6 +44,28 @@
                placeholder="example@email.com"
                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
     </div>
+    
+     <div class="mb-4">
+        <label class="block text-sm font-medium mb-1">
+            Role
+        </label>
+        <select
+        name="roles"
+        id="roles"
+        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full mb-4"
+    >
+        <option value="" >Select role</option>
+
+        @foreach ($roles as $role)
+            <option
+                value="{{ $role->name }}"
+                {{ isset($user) && $user->hasRole($role->name) ? 'selected' : '' }}
+            >
+                {{ $role->name }}
+            </option>
+        @endforeach
+    </select>
+    </div>
 
     <div class="mb-4">
         <label class="block text-sm font-medium mb-1">
