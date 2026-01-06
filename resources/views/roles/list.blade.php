@@ -57,7 +57,7 @@
             </table>
             <div class="my-3">
 
-                {{-- {{ $permissions->links() }} --}}
+                {{ $roles->links() }}
             </div>
         </div>
     </div>

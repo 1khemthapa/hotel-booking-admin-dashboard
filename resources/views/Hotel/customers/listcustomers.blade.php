@@ -63,8 +63,8 @@ Delete
                 </tbody>
             </table>
             <div class="my-3">
-{{--
-                {{ $customers->links() }} --}}
+
+                {{ $customers->links() }}
             </div>
         </div>
     </div>

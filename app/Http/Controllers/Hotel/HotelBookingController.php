@@ -33,7 +33,7 @@ class HotelBookingController extends Controller //implements HasMiddleware
     {
         $user=Auth::guard('hotels')->user();
 
-        $bookings=$user->bookings;
+        $bookings=$user->bookings()->latest()->paginate(10);
     return view('Hotel.bookings.listbookings',compact('bookings'));
     }
 

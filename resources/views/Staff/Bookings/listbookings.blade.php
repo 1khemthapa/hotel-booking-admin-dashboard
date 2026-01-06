@@ -68,7 +68,7 @@
             </table>
             <div class="my-3">
 
-                {{-- {{ $bookings->links() }} --}}
+                {{ $bookings->links() }}
             </div>
         </div>
     </div>

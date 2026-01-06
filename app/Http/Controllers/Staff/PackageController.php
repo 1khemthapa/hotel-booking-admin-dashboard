@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Staff;
+
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
@@ -13,13 +14,13 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class PackageController extends Controller implements HasMiddleware
 {
-    public static function middleware():array
+    public static function middleware(): array
     {
         return [
-            new middleware('permission:view-customer',only:['index']),
-            new middleware('permission:create-customer',only:['create']),
-            new middleware('permission:edit-customer',only:['edit']),
-            new middleware('permission:delete-customer',only:['destroy']),
+            new middleware('permission:view-customer', only: ['index']),
+            new middleware('permission:create-customer', only: ['create']),
+            new middleware('permission:edit-customer', only: ['edit']),
+            new middleware('permission:delete-customer', only: ['destroy']),
         ];
     }
 
@@ -27,12 +28,12 @@ class PackageController extends Controller implements HasMiddleware
      * Display a listing of the resource.
      */
     public function index()
-{
+    {
 
-     $staff=Auth::guard('staffs')->user();
-        $hotel=$staff->hotel;
-        $packages=$hotel? $hotel->packages:collect();
-        return view('Staff.Packages.listpackages',compact('packages'));
+        $staff = Auth::guard('staffs')->user();
+        $hotel = $staff->hotel;
+        $packages = $hotel ? $hotel->packages()->latest()->paginate(10) : collect();
+        return view('Staff.Packages.listpackages', compact('packages'));
     }
 
     /**
@@ -40,9 +41,9 @@ class PackageController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        $hotels=Hotel::get();
+        $hotels = Hotel::get();
 
-        return view('Staff.Packages.createpackages',compact('hotels'));
+        return view('Staff.Packages.createpackages', compact('hotels'));
     }
 
     /**
@@ -52,20 +53,20 @@ class PackageController extends Controller implements HasMiddleware
     {
         $hotelId = Auth::guard('hotels')->id();
 
-        $validator=Validator::make($request->all(),[
-            'hotel_id'=>'sometimes|nullable',
-            'package_name'=>'required|max:100',
-             'status'=>'required|in:active,inactive',
-             'price'=>'required|numeric'
+        $validator = Validator::make($request->all(), [
+            'hotel_id' => 'sometimes|nullable',
+            'package_name' => 'required|max:100',
+            'status' => 'required|in:active,inactive',
+            'price' => 'required|numeric'
         ]);
 
         Package::create([
-            'hotel_id'=>$hotelId,
-            'package_name'=>$request->package_name,
-            'status'=>$request->status,
-            'price'=>$request->price,
+            'hotel_id' => $hotelId,
+            'package_name' => $request->package_name,
+            'status' => $request->status,
+            'price' => $request->price,
         ]);
-        return redirect()->route('staffpackages.index')->with('success','Packages created successfully');
+        return redirect()->route('staffpackages.index')->with('success', 'Packages created successfully');
     }
 
     /**
@@ -81,9 +82,9 @@ class PackageController extends Controller implements HasMiddleware
      */
     public function edit(string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
         // $hotels=Hotel::orderBy('name')->get();
-        return view('Staff.Packages.editpackages',compact('package'));
+        return view('Staff.Packages.editpackages', compact('package'));
     }
 
     /**
@@ -91,26 +92,26 @@ class PackageController extends Controller implements HasMiddleware
      */
     public function update(Request $request, string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
 
-         $validator=Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             // 'hotel_id'=>'required|exists:hotels,id',
-            'package_name'=>'required|max:100',
-             'status'=>'required|in:active,inactive',
-             'price'=>'required|numeric'
+            'package_name' => 'required|max:100',
+            'status' => 'required|in:active,inactive',
+            'price' => 'required|numeric'
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('staffpackages.index')->withInput()->withErrors($validator);
         }
         // $package->hotel_id=$request->hotel_id;
 
-        $package->package_name=$request->package_name;
-        $package->status=$request->status;
-        $package->price=$request->price;
+        $package->package_name = $request->package_name;
+        $package->status = $request->status;
+        $package->price = $request->price;
         $package->save();
 
 
-        return redirect()->route('staffpackages.index')->with('success','Packages created successfully');
+        return redirect()->route('staffpackages.index')->with('success', 'Packages created successfully');
     }
 
     /**
@@ -118,8 +119,8 @@ class PackageController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        $package=Package::findorfail($id);
+        $package = Package::findorfail($id);
         $package->delete();
-        return redirect()->route('staffpackages.index')->with('success','Package deleted successfully');
+        return redirect()->route('staffpackages.index')->with('success', 'Package deleted successfully');
     }
 }

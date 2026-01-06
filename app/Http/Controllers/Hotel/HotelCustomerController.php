@@ -29,7 +29,7 @@ class HotelCustomerController extends Controller //implements HasMiddleware
     public function index()
     {
             $users=Auth::guard('hotels')->user();
-            $customers=$users->customers;
+            $customers=$users->customers()->latest()->paginate(10);
 
         // $customers=Customer::latest()->paginate(10);
         return view('Hotel.customers.listcustomers',compact('customers'));

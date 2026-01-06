@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Auth;
 class CustomerController extends Controller implements HasMiddleware
 {
 
-    public static function middleware():array
+    public static function middleware(): array
     {
         return [
-            new middleware('permission:view-customer',only:['index']),
-            new middleware('permission:create-customer',only:['create']),
-            new middleware('permission:edit-customer',only:['edit']),
-            new middleware('permission:delete-customer',only:['destroy']),
+            new middleware('permission:view-customer', only: ['index']),
+            new middleware('permission:create-customer', only: ['create']),
+            new middleware('permission:edit-customer', only: ['edit']),
+            new middleware('permission:delete-customer', only: ['destroy']),
         ];
     }
     // y
@@ -29,12 +29,12 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function index()
     {
-            $staff=Auth::guard('staffs')->user();
-        $hotel=$staff->hotel;
-        $customers=$hotel? $hotel->customers:collect();
+        $staff = Auth::guard('staffs')->user();
+        $hotel = $staff->hotel;
+        $customers = $hotel ? $hotel->customers()->latest()->paginate(10) : collect();
 
         // $customers=Customer::latest()->paginate(10);
-        return view('Staff.customers.listcustomers',compact('customers'));
+        return view('Staff.Customers.listcustomers', compact('customers'));
     }
 
     /**
@@ -42,8 +42,8 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function create()
     {
-         $hotels=Hotel::get();
-        return view('Staff.customers.createcustomers');
+        $hotels = Hotel::get();
+        return view('Staff.Customers.createcustomers');
     }
 
     /**
@@ -51,24 +51,24 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-        $hotelId=Auth::guard('hotels')->id();
+        $hotelId = Auth::guard('hotels')->id();
         // dd($hotelId);
-        $validator=Validator::make($request->all(),[
-            'full_name'=>'required|max-255',
-            'contact'=>'required|numeric',
-            'email'=>'required',
-            'address'=>'required|max:255',
-            'hotel_id'=>'sometimes|nullable'
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|max-255',
+            'contact' => 'required|numeric',
+            'email' => 'required',
+            'address' => 'required|max:255',
+            'hotel_id' => 'sometimes|nullable'
         ]);
         Customer::create([
-        'full_name'=>$request->full_name,
-        'hotel_id'=>$hotelId,
-        'contact'=>$request->contact,
-        'email'=>$request->email,
-        'address'=>$request->address,
-        'dob'=>$request->dob,
+            'full_name' => $request->full_name,
+            'hotel_id' => $hotelId,
+            'contact' => $request->contact,
+            'email' => $request->email,
+            'address' => $request->address,
+            'dob' => $request->dob,
         ]);
-        return redirect()->route('staffcustomers.index')->with('success','Customer created successfully');
+        return redirect()->route('staffcustomers.index')->with('success', 'Customer created successfully');
     }
 
     /**
@@ -84,8 +84,8 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function edit(string $id)
     {
-        $customer=Customer::findorfail($id);
-        return view('Staff.Customers.editcustomers',compact('customer'));
+        $customer = Customer::findorfail($id);
+        return view('Staff.Customers.editcustomers', compact('customer'));
     }
 
     /**
@@ -93,22 +93,22 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function update(Request $request, string $id)
     {
-        $customer=Customer::findorfail($id);
-        $validator=Validator::make($request->all(),[
-            'full_name'=>'required|max:255',
-            'contact'=>'required|numeric',
-            'email'=>'required',
-            'address'=>'required|max:255',
+        $customer = Customer::findorfail($id);
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|max:255',
+            'contact' => 'required|numeric',
+            'email' => 'required',
+            'address' => 'required|max:255',
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('staffcustomers.create')->withInput()->withErrors($validator);
         }
-        $customer->full_name=$request->full_name;
-        $customer->contact=$request->contact;
-        $customer->email=$request->email;
-        $customer->address=$request->address;
+        $customer->full_name = $request->full_name;
+        $customer->contact = $request->contact;
+        $customer->email = $request->email;
+        $customer->address = $request->address;
         $customer->save();
-        return redirect()->route('staffcustomers.index')->with('success','Customer updated successfully');
+        return redirect()->route('staffcustomers.index')->with('success', 'Customer updated successfully');
     }
 
     /**
@@ -116,8 +116,8 @@ class CustomerController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        $customer=Customer::findorfail($id);
+        $customer = Customer::findorfail($id);
         $customer->delete();
-        return redirect()->route('staffcustomers.index')->with('success','Customer deleted successfully');
+        return redirect()->route('staffcustomers.index')->with('success', 'Customer deleted successfully');
     }
 }

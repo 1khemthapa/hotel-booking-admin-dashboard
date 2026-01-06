@@ -54,10 +54,10 @@
                     @endif
                 </tbody>
             </table>
-            {{-- <div class="my-3">
+            <div class="my-3">
 
                 {{ $packages->links() }}
-            </div> --}}
+            </div>
         </div>
     </div>
 </x-hotel-layout>

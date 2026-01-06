@@ -58,8 +58,8 @@
                 </tbody>
             </table>
             <div class="my-3">
-{{--
-                {{ $customers->links() }} --}}
+
+                {{ $staffs->links() }}
             </div>
         </div>
     </div>

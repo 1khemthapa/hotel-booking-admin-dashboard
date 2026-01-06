@@ -23,7 +23,7 @@ class HotelPackageController extends Controller
 
         $user = Auth::guard('hotels')->user();
 
-        $packages = $user->packages;
+        $packages = $user->packages()->latest()->paginate(10);
         return view('Hotel.packages.listpackage', compact('packages'));
     }
 
