@@ -9,12 +9,13 @@
     </x-slot>
    <form action="{{ route('hotelstaffs.store') }}"
       method="POST"
-      class="max-w-md mx-auto mt-2 bg-white p-6 rounded-lg shadow">
+      class="max-w-full m-8 mt-12 bg-white p-6 rounded-lg shadow">
     @csrf
 
-
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+<div>
+    <div class="grid grid-cols-2 gap-6 mb-6">
+    <div >
+        <label class="block text-sm font-medium ">
             Full Name
         </label>
         <input type="text"
@@ -24,8 +25,8 @@
     </div>
 
 
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+    <div >
+        <label class="block text-sm font-medium">
             Contact Number
         </label>
         <input type="number"
@@ -35,8 +36,8 @@
     </div>
 
 
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+    <div >
+        <label class="block text-sm font-medium ">
             Email Address
         </label>
         <input type="email"
@@ -44,15 +45,15 @@
                placeholder="example@email.com"
                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
     </div>
-    
-     <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+
+     <div >
+        <label class="block text-sm font-medium ">
             Role
         </label>
         <select
         name="roles"
         id="roles"
-        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full mb-4"
+        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full "
     >
         <option value="" >Select role</option>
 
@@ -67,29 +68,29 @@
     </select>
     </div>
 
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+    <div >
+        <label class="block text-sm font-medium ">
             Address
         </label>
-        <textarea name="address"
-                  rows="2"
+        <input name="address"
                   placeholder="Enter address"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></textarea>
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></input>
     </div>
-    <div class="mb-4">
-        <label class="block text-sm font-medium mb-1">
+    <div >
+        <label class="block text-sm font-medium ">
             Password
         </label>
         <input type="password" name="password"
                   placeholder="Enter password"
                   class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"/>
     </div>
-
+    </div>
 
     <button type="submit"
             class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
         Save
     </button>
+    </div>
 </form>
 
 

@@ -100,6 +100,7 @@ class UserController extends Controller //implements HasMiddleware
         }
         $user->name=$request->name;
         $user->email=$request->email;
+        $user->address=$request->address;
 
         $user->save();
 

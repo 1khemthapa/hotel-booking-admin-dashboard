@@ -9,11 +9,11 @@
     </x-slot>
    <form action="{{ route ('hotels.store')}}"
       method="POST"
-      class="max-w-md mx-auto mt-2 bg-white p-6 rounded-lg shadow">
+      class="w-auto   m-8   bg-white p-6 rounded-lg shadow">
     @csrf
 
-
-    <div class="mb-4">
+    <div class="w-auto grid grid-cols-2 gap-6 mb-4 bg-white ">
+    <div>
         <label class="block text-sm font-medium mb-1">
             Hotel Name
         </label>
@@ -24,7 +24,7 @@
     </div>
 
 
-    <div class="mb-4">
+    <div>
         <label class="block text-sm font-medium mb-1">
             Contact Number
         </label>
@@ -35,7 +35,7 @@
     </div>
 
 
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Email Address
         </label>
@@ -46,7 +46,7 @@
     </div>
 
 
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Status
         </label>
@@ -56,7 +56,7 @@
             <option value="inactive">Inactive</option>
         </select>
     </div>
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Type
         </label>
@@ -71,29 +71,29 @@
     </select>
     </div>
 
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Username
         </label>
         <input type="text" name="username" id="username" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
     </div>
-    <div class="mb-4">
+    <div >
         <label  class="block text-sm font-medium mb-1">
             Password
         </label>
         <input type="password" name="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
     </div>
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Address
         </label>
         <textarea name="address"
-                  rows="3"
+                  rows="1"
                   placeholder="Enter address"
                   class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></textarea>
     </div>
-    <textarea name="notes" row="3" placeholder="Remarks" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></textarea>
-
+    <textarea name="notes" placeholder="Remarks" class="w-full border border-gray-300 rounded-md px-2 text-sm"></textarea>
+</div>
     <button type="submit"
             class="w-full bg-blue-700 text-white py-2 rounded-md hover:bg-blue-500">
         Save

@@ -18,7 +18,7 @@ class HotelownerController extends Controller
         return view('Hotel.auth.hotellogin');
     }
 
-
+    
     /**
      * Handle the incoming request.
      */

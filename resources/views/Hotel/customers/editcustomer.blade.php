@@ -4,7 +4,8 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Users/Edit
             </h2>
-            <a href="{{ route('hotelcustomers.index') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Back</a>
+            <a href="{{ route('hotelcustomers.index') }}"
+                class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Back</a>
         </div>
     </x-slot>
 
@@ -12,7 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('hotelcustomers.update',$customer->id) }}" method="post">
+                    <form action="{{ route('hotelcustomers.update', $customer->id) }}" method="post">
                         @csrf
                         <div>
                             <label for="" class="text-sm font-medium">Name</label>
@@ -55,13 +56,13 @@
                             </div>
 
 
-                                <button
-                                    class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 text-white">Update</button>
-                            </div>
+                            <button
+                                class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 text-white">Update</button>
                         </div>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </x-hotel-layout>

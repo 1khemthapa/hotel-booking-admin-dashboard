@@ -9,11 +9,13 @@
     </x-slot>
    <form action="{{ route('users.store') }}"
       method="POST"
-      class="max-w-md mx-auto mt-2 bg-white p-6 rounded-lg shadow">
+      class="  mt-12 ml-8 bg-white p-6 rounded-lg shadow">
     @csrf
 
+    <div>
+        <div class="grid grid-cols-2 gap-6 mb-4">
 
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Full Name
         </label>
@@ -25,7 +27,7 @@
 
 
 
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Email Address
         </label>
@@ -36,15 +38,15 @@
     </div>
 
 
- 
-    <div class="mb-4">
+
+    <div >
         <label class="block text-sm font-medium mb-1">
             Role
         </label>
         <select
         name="roles"
         id="roles"
-        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full mb-4"
+        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full "
     >
         <option value="" >Select role</option>
 
@@ -57,29 +59,31 @@
             </option>
         @endforeach
     </select>
+    </div>
 
 
-
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Password
         </label>
         <input type="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
     </div>
-    <div class="mb-4">
+    <div >
         <label class="block text-sm font-medium mb-1">
             Address
         </label>
-        <textarea name="address"
-                  rows="3"
+        <input name="address"
+
                   placeholder="Enter address"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></textarea>
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></input>
     </div>
 
+        </div>
     <button type="submit"
             class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">
         Save
     </button>
+    </div>
 </form>
 
 

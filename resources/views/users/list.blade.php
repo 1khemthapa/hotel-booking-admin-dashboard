@@ -20,8 +20,6 @@
                         <th class="px-6 py-2 rounded-md text-left">Name</th>
                         <th class="px-6 py-2 rounded-md text-left">Email</th>
                         <th class="px-6 py-2 rounded-md text-left">Role</th>
-                        <th class="px-6 py-2 rounded-md text-left">Contact</th>
-
                         <th class="px-6 py-2 rounded-md text-left">Created</th>
                         <th class="px-6 py-2 rounded-md text-center">Action</th>
                     </tr>
@@ -35,9 +33,6 @@
                         <td class="px-6 py-2 text-left ">{{$user->name}}</td>
                         <td  class="px-6 py-2 text-left">{{$user->email}}</td>
                         <td class="px-6 py-2 text-left"> {{ $user->roles->first()?->display_name ?? 'No Role' }}</td>
-                        <td  class="px-6 py-2 text-left">{{$user->contact}}</td>
-
-
                         <td class="px-6 py-2 text-left w-180">
                            {{ \Carbon\Carbon::parse($user->created_at)->format('d M,Y')}}
                         </td>

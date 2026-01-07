@@ -15,48 +15,46 @@
                     <form action="{{ route('hotelstaffs.update',$staff->id) }}" method="post">
                         @csrf
                         <div>
+                            <div class="grid grid-cols-2 gap-6 mb-6">
+                        <div>
                             <label for="" class="text-sm font-medium">Name</label>
-                            <div class="my-3">
                                 <input value="{{ old('name', $staff->name) }}" name="name" type="text"
-                                    placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                                    placeholder="Enter Name" class="border-gray-300 shadow-sm w-full rounded-lg">
                                 @error('name')
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
                                 @enderror
                             </div>
+
                             <div>
                                 <label for="" class="text-sm font-medium">Email</label>
-                                <div class="my-3">
                                     <input value="{{ old('name', $staff->email) }}" name="email" type="text"
-                                        placeholder="Enter Email" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                                        placeholder="Enter Email" class="border-gray-300 shadow-sm w-full rounded-lg">
                                     @error('email')
                                         <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div>
+
                             <div>
                                 <label for="" class="text-sm font-medium">Contact</label>
-                                <div class="my-3">
                                     <input value="{{ old('contact', $staff->contact) }}" name="contact" type="text"
-                                        placeholder="Enter contact" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                                        placeholder="Enter contact" class="border-gray-300 shadow-sm w-full rounded-lg">
                                     @error('contact')
                                         <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror
                                 </div>
-                            </div>
+
                             <div>
                                 <label for="" class="text-sm font-medium">Address</label>
-                                <div class="my-3">
                                     <input value="{{ old('address', $staff->address) }}" name="address" type="text"
-                                        placeholder="Enter address" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                                        placeholder="Enter address" class="border-gray-300 shadow-sm w-full rounded-lg">
                                     @error('address')
                                         <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
 
-
                                 <button
-                                    class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 text-white">Update</button>
+                                    class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 w-full text-white">Update</button>
                             </div>
                         </div>
                     </form>

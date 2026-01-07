@@ -15,34 +15,45 @@
                     <form action="{{ route('users.update', $user->id) }}" method="post">
                         @csrf
                         <div>
+                            <div class="grid grid-cols-2 gap-6 mb-4">
+                        <div >
                             <label for="" class="text-sm font-medium">Name</label>
-                            <div class="my-3">
+
                                 <input value="{{ old('name', $user->name) }}" name="name" type="text"
-                                    placeholder="Enter Name" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+                                    placeholder="Enter Name" class="border-gray-300 shadow-sm w-full rounded-lg">
                                 @error('name')
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
                                 @enderror
                             </div>
                             <div>
                                 <label for="" class="text-sm font-medium">Email</label>
-                                <div class="my-3">
-                                    <input value="{{ old('name', $user->email) }}" name="email" type="text"
-                                        placeholder="Enter Email" class="border-gray-300 shadow-sm w-1/2 rounded-lg">
+
+                                    <input value="{{ old('email', $user->email) }}" name="email" type="text"
+                                        placeholder="Enter Email" class="border-gray-300 shadow-sm w-full rounded-lg">
                                     @error('email')
+                                        <p class="text-red-400 font-medium">{{ $message }}</p>
+                                    @enderror
+                            </div>
+                            <div>
+                                <label for="" class="text-sm font-medium">Address</label>
+
+                                    <input value="{{ old('address', $user->address) }}" name="address" type="text"
+                                        placeholder="Enter Address" class="border-gray-300 shadow-sm w-full rounded-lg">
+                                    @error('address')
                                         <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror
                                 </div>
 
 
-                                <div class="mt-3">
-    <label for="role" class="block mb-1 font-medium">
+                                <div >
+    <label for="role" class="block  font-medium">
         Role
     </label>
 
     <select
         name="roles"
         id="roles"
-        class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500"
+        class=" rounded border-gray-300 w-full cursor-pointer focus:border-indigo-500 focus:ring-indigo-500"
     >
         <option value="">Select role</option>
 
@@ -56,10 +67,12 @@
         @endforeach
     </select>
 </div>
-
+                            </div>
 
                                 <button
-                                    class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 text-white">Update</button>
+                                    class="bg-slate-700 hover:bg-slate-500 cursor-pointer text-sm rounded-md px-5 py-2 mt-4 text-white w-full">Update</button>
+
+                        </div>
                             </div>
                     </form>
                 </div>
