@@ -10,6 +10,11 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <!-- Add this in your layout <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<!-- Add this before </body> -->
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -34,5 +39,48 @@
             </main>
             </div>
         </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Success message
+            @if(session('success'))
+                Toastify({
+                    text: "{{ session('success') }}",
+                    duration: 4000,
+                    close: true,
+                    gravity: "top", // top or bottom
+                    position: "right", // left, center, right
+                    backgroundColor: "#16a34a", // green-500
+                }).showToast();
+            @endif
+
+            // Error message
+            @if(session('error'))
+                Toastify({
+                    text: "{{ session('error') }}",
+                    duration: 4000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#dc2626", // red-600
+                }).showToast();
+            @endif
+
+            // Validation errors
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    Toastify({
+                        text: "{{ $error }}",
+                        duration: 4000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#dc2626",
+                    }).showToast();
+                @endforeach
+            @endif
+        });
+    </script>
+
+
     </body>
 </html>

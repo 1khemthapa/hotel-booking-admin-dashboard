@@ -34,7 +34,7 @@
                         <td class="px-6 py-2 text-left w-10">{{$users->firstItem() + $idx}}</td>
                         <td class="px-6 py-2 text-left ">{{$user->name}}</td>
                         <td  class="px-6 py-2 text-left">{{$user->email}}</td>
-                        <td class="px-6 py-2 text-left"> {{ $user->roles->first()?->name ?? 'No Role' }}</td>
+                        <td class="px-6 py-2 text-left"> {{ $user->roles->first()?->display_name ?? 'No Role' }}</td>
                         <td  class="px-6 py-2 text-left">{{$user->contact}}</td>
 
 

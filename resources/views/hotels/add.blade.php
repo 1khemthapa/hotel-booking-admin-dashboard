@@ -71,26 +71,6 @@
     </select>
     </div>
 
-
-    {{-- <div class="mb-4">
-    <label class="block text-sm font-medium mb-1">
-        Role
-    </label>
-    <select
-        name="role"
-        id="role"
-        class="rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full">
-        <option value="">Select type</option>
-        @foreach($roles as $role)
-
-                <option value="{{ $role->name }}">{{ $role->name }}</option>
-
-        @endforeach
-    </select>
-</div> --}}
-
-
-
     <div class="mb-4">
         <label class="block text-sm font-medium mb-1">
             Username

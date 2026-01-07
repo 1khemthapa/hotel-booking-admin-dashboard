@@ -62,7 +62,7 @@ class UserController extends Controller //implements HasMiddleware
             'password'=>bcrypt('password'),
 
         ]);
-        $user->assignRole($request->role);
+        $user->assignRole($request->roles);
         return redirect()->route('users.index')->with('success','User created successfully');
 
     }

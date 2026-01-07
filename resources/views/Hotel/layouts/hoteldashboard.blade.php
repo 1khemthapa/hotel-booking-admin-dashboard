@@ -38,7 +38,7 @@
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">#</th>
                             <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Customer Name</th>
-                            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Package Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                             <th scope="col" class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Address</th>
 
@@ -49,7 +49,6 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $idx + 1 }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $customer->full_name }}</td>
-
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $customer->email}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $customer->contact}}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $customer->address}}</td>

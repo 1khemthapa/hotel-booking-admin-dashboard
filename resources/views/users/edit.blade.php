@@ -51,7 +51,7 @@
                 value="{{ $role->name }}"
                 {{ isset($user) && $user->hasRole($role->name) ? 'selected' : '' }}
             >
-                {{ $role->name }}
+                {{ $role->display_name }}
             </option>
         @endforeach
     </select>
