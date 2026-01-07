@@ -22,7 +22,7 @@ class StaffController extends Controller
         $roles = Role::where('guard_name', 'staffs')->where('hotel_id', $hotelId)->get();
 
         $user = Auth::guard('hotels')->user();
-        $staffs = $user->staffs()->latest()->paginate(10);
+        $staffs = $user->staffs()->latest()->paginate(7);
 
         return view('Hotel.Staffs.liststaffs', compact('staffs', 'roles'));
     }

@@ -26,10 +26,16 @@ return [
     /**
      * Display a listing of the resource.
      */
+    public function hotels(){
+        $hotels=Hotel::latest()->get();
+        $users=User::latest()->get();
+        return view ('dashboard',compact('hotels','users'));
+    }
+
     public function index()
     {
         $users=User::all();
-        $hotels=Hotel::latest()->paginate(10);
+        $hotels=Hotel::latest()->paginate(7);
         return view('hotels.list',compact('hotels','users'));
     }
 

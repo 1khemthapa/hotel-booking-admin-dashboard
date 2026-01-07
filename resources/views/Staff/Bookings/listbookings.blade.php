@@ -1,18 +1,22 @@
 <x-staff-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Booking') }}
-        </h2>
-        @can('create-booking')
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Booking') }}
+            </h2>
 
-        <a href="{{ route('staffbookings.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Booking</a>
-        @endcan
+            @can('create-booking')
+                <a href="{{ route('staffbookings.create') }}"
+                   class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">
+                    Add Booking
+                </a>
+            @endcan
         </div>
-    @endcan
     </x-slot>
 
-    <div class="py-12">
+
+
+    <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <x-message></x-message>
              <table class="w-full">
@@ -48,11 +52,11 @@
                             @can('edit-booking')
                             <a href="{{ route('staffbookings.edit',$booking->id) }}" class="bg-slate-700 text-sm rounded-md text-white px-3 py-2 hover:bg-slate-600">Edit</a>
                             @endcan
+
                             <form action="{{ route('staffbookings.destroy', $booking->id) }}" method="POST" >
     @csrf
     @method('DELETE')
                                 @can('delete-booking')
-
                                 <button type="submit" onclick="return confirm('Are you sure you want to delete');"
                                 class="bg-red-700 text-sm inline-block rounded-md text-white px-3 py-2 ml-2 hover:bg-red-600">
                                 Delete
@@ -63,7 +67,7 @@
                         </td>
                     </tr>
                     @endforeach
-
+                    @endif
                 </tbody>
             </table>
             <div class="my-3">

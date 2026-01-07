@@ -32,7 +32,7 @@ class HotelRoleController extends Controller //implements HasMiddleware
         $roles = Role::where('guard_name', 'staffs')
             ->where('hotel_id', $hotelId)
             ->orderBy('display_name', 'asc')
-            ->paginate(10);
+            ->paginate(7);
 
         //     $roles = Role::where('guard_name','staffs')
         //     ->orderBy('name', 'asc')
@@ -57,14 +57,18 @@ class HotelRoleController extends Controller //implements HasMiddleware
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'display_name' => 'required|unique:roles',
+            'display_name' => 'required',
 
         ]);
+
         if ($validator->passes()) {
+
+            $slug="hotel-".Auth::guard("hotels")->user()->id."-".Str::slug($request->display_name);
+
             $hotelId = Auth::guard('hotels')->id();
             $role = Role::create([
                 'display_name' => $request->display_name,
-                'name' => Str::slug($request->display_name),
+                'name' => $slug,
                 'guard_name' => 'staffs',
                 'hotel_id' => $hotelId,
             ]);

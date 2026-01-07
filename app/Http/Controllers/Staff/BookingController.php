@@ -33,7 +33,7 @@ class BookingController extends Controller implements HasMiddleware
     {
         $staff = Auth::guard('staffs')->user();
         $hotel = $staff->hotel;
-        $bookings = $hotel ? $hotel->bookings()->orderBy('ASC')->paginate(10) : collect();
+        $bookings = $hotel ? $hotel->bookings()->orderBy('ASC')->paginate(7) : collect();
 
 
         return view('Staff.Bookings.listbookings', compact('bookings'));

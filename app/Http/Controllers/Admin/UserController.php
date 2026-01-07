@@ -28,7 +28,7 @@ class UserController extends Controller //implements HasMiddleware
     public function index()
     {
 
-        $users=User::latest()->with('role')->paginate(10);
+        $users=User::latest()->with('role')->paginate(7);
         return view('users.list',compact('users'));
 
     }

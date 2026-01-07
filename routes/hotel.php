@@ -16,7 +16,7 @@ Route::post('/owner/logout',[HotelownerController::class,'logout'])->name('hotel
 // Route::get('/staff-dashboard',[HotelownerController::class,'index'])->name('staff.show');
 Route::prefix('owner')->middleware('auth:hotels')->group(function () {
 
-    Route::get('/owner/loggedin',[HotelownerController::class,'show'])->name('owner.show');
+    Route::get('/loggedin',[HotelownerController::class,'show'])->name('owner.show');
 
      Route::get('/packages',[HotelPackageController::class,'index'])->name('hotelpackages.index');
         Route::get('/packages/create',[HotelPackageController::class,'create'])->name('hotelpackages.create');

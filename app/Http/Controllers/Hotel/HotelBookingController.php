@@ -29,11 +29,12 @@ class HotelBookingController extends Controller //implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $user=Auth::guard('hotels')->user();
 
-        $bookings=$user->bookings()->latest()->paginate(10);
+        $bookings=$user->bookings()->latest()->paginate(7);
     return view('Hotel.bookings.listbookings',compact('bookings'));
     }
 

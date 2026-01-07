@@ -30,7 +30,7 @@ class RoleController extends Controller implements HasMiddleware
         $roles = Role::where('guard_name', 'web')
             ->orderBy('name', 'asc')
             ->orderBy('id', 'asc')
-            ->paginate(10);
+            ->paginate(7);
 
         return view('roles.list', compact('roles'));
     }

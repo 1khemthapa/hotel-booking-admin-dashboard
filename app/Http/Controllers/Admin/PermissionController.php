@@ -24,11 +24,17 @@ class PermissionController extends Controller  implements HasMiddleware
 
 
     //This method will show permissino page
-    public function index(){
-        $permissions=Permission::orderBy('created_at','ASC')->paginate(10);
-        return view('permissions.list',[
-        'permissions'=>$permissions]);
-    }
+ public function index(Request $request)
+{
+
+    $tab = $request->get('tab', 'admin');
+    $permissions = Permission::where('guard_name', $tab === 'admin' ? 'web' : 'staffs')
+        ->orderBy('name','ASC')
+        ->paginate(7)
+        ->withQueryString();
+
+    return view('permissions.list', compact('permissions', 'tab'));
+}
     //This method will show create permission page
     public function create(){
         return view ('permissions.create');

@@ -47,11 +47,22 @@ class HotelownerController extends Controller
     }
 
     public function show(){
-        return view('Hotel.layouts.hoteldashboard');
+        $user=Auth::guard('hotels')->user();
+        $customers=$user->customers()->latest()->paginate(5);
+        $bookings=$user->bookings()->latest()->get();
+        $staffs=$user->staffs()->get();
+        return view('Hotel.layouts.hoteldashboard',compact('customers','bookings','staffs'));
     }
+
     public function index(){
-        return view('Staff.layouts.hoteldashboard');
+        $staff=Auth::guard('staffs')->user();
+        $hotel=$staff->hotel;
+        $customers=$hotel->customers()->latest()->paginate(5);
+        $bookings=$hotel->bookings()->latest()->get();
+
+        return view('Staff.layouts.hoteldashboard',compact('customers','bookings'));
     }
+
     public function logout(Request $request){
         Auth::guard('hotels','staffs')->logout();
         $request->session()->invalidate();

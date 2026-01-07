@@ -31,7 +31,7 @@ class CustomerController extends Controller implements HasMiddleware
     {
         $staff = Auth::guard('staffs')->user();
         $hotel = $staff->hotel;
-        $customers = $hotel ? $hotel->customers()->latest()->paginate(10) : collect();
+        $customers = $hotel ? $hotel->customers()->latest()->paginate(7) : collect();
 
         // $customers=Customer::latest()->paginate(10);
         return view('Staff.Customers.listcustomers', compact('customers'));

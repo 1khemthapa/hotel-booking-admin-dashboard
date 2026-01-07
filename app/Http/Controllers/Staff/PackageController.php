@@ -32,7 +32,7 @@ class PackageController extends Controller implements HasMiddleware
 
         $staff = Auth::guard('staffs')->user();
         $hotel = $staff->hotel;
-        $packages = $hotel ? $hotel->packages()->latest()->paginate(10) : collect();
+        $packages = $hotel ? $hotel->packages()->latest()->paginate(7) : collect();
         return view('Staff.Packages.listpackages', compact('packages'));
     }
 
