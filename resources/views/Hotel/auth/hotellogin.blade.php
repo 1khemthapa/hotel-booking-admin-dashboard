@@ -34,7 +34,7 @@
             >
         </div>
 
-        <div>
+        {{-- <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
                 User Type
             </label>
@@ -46,7 +46,7 @@
                 <option value="hotels">Hotel</option>
                 <option value="staffs">Staff</option>
             </select>
-        </div>
+        </div> --}}
 
 
        <div>

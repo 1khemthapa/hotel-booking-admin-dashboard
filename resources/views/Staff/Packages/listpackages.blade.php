@@ -6,7 +6,7 @@
         </h2>
         @can('create-package')
 
-        <a href="{{ route('staffpackages.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Package</a>
+        <a href="{{ route('staffpackages.create') }}" class="bg-slate-700 text-sm rounded-md px-3 h-10 text-white">Add Package</a>
         @endcan
         </div>
 

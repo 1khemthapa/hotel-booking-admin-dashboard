@@ -34,7 +34,7 @@
                         <td class="px-6 py-2 text-left ">{{$staff->name}}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->contact}}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->email}}</td>
-                        <td  class="px-6 py-2 text-left">{{ $staff->getRoleNames()->join(', ') }}</td>
+                        <td  class="px-6 py-2 text-left">{{ $staff->roles->pluck('display_name')->join(', ') }}</td>
                         <td  class="px-6 py-2 text-left">{{$staff->address}}</td>
 
 

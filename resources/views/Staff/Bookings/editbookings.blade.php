@@ -83,7 +83,7 @@
                                     <label for="" class="text-sm font-medium block">Notes</label>
 
                                     <input value="{{ old('notes', $customer->notes) }}" name="notes" type="text"
-                                        placeholder="Enter Email" class="border-gray-300 shadow-sm w-full rounded-lg">
+                                        placeholder="Enter remarks" class="border-gray-300 shadow-sm w-full rounded-lg">
                                     @error('notes')
                                         <p class="text-red-400 font-medium">{{ $message }}</p>
                                     @enderror

@@ -7,7 +7,7 @@
 
             @can('create-booking')
                 <a href="{{ route('staffbookings.create') }}"
-                   class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">
+                   class="bg-slate-700 text-sm rounded-md px-3 py-2  text-white">
                     Add Booking
                 </a>
             @endcan

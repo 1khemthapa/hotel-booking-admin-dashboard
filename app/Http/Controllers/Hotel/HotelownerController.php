@@ -18,7 +18,7 @@ class HotelownerController extends Controller
         return view('Hotel.auth.hotellogin');
     }
 
-    
+
     /**
      * Handle the incoming request.
      */
@@ -31,16 +31,16 @@ class HotelownerController extends Controller
             'password' => 'required'
         ]);
 
-            if($request->user_type=="staffs"){
+
                 if(Auth::guard('staffs')->attempt($credentials)){
-                    return redirect()->route('staff.dashboard');
+                    return redirect()->route('staff.dashboard')->with('success','Logged in as hotel staff');
                 }
-            }
-            else if($request->user_type=="hotels"){
+
+
                 if(Auth::guard('hotels')->attempt($credentials)){
-                    return redirect()->route('owner.show');
+                    return redirect()->route('owner.show')->with('success','Logged in as hotel');
                 }
-            }
+
 
 
         return back()->withErrors(['email' => 'The provided credentials do not match'])->onlyInput('email');
@@ -64,7 +64,8 @@ class HotelownerController extends Controller
     }
 
     public function logout(Request $request){
-        Auth::guard('hotels','staffs')->logout();
+        Auth::guard('hotels')->logout();
+        Auth::guard('staffs')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/stafflogin')->with('success','Log out successfully');

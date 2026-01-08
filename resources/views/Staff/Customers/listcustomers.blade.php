@@ -6,7 +6,7 @@
         </h2>
         @can('create-customer')
 
-        <a href="{{ route('staffcustomers.create') }}" class="bg-slate-700 text-sm rounded-md px-3 py-2 text-white">Add Customer</a>
+        <a href="{{ route('staffcustomers.create') }}" class="bg-slate-700 text-sm rounded-md px-2 py-2 text-white">Add Customer</a>
         @endcan
         </div>
 
