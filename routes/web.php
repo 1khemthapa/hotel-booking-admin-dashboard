@@ -61,36 +61,10 @@ Route::prefix('admin')->middleware(['web'])
         Route::post('/hotels/{id}', [HotelController::class, 'update'])->name('hotels.update');
         Route::delete('/hotels/{id}', [HotelController::class, 'destroy'])->name('hotels.destroy');
 
-        //Packgages Routes
-
-        // Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
-        // Route::get('/packages/create', [PackageController::class, 'create'])->name('packages.create');
-        // Route::post('/packages/store', [PackageController::class, 'store'])->name('packages.store');
-        // Route::get('/packages/{id}/edit', [PackageController::class, 'edit'])->name('packages.edit');
-        // Route::post('/packages/{id}', [PackageController::class, 'update'])->name('packages.update');
-        // Route::delete('/packages/{id}', [PackageController::class, 'destroy'])->name('packages.destroy');
-
-        //Customers Routes
-        // Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-        // Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-        // Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
-        // Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-        // Route::post('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
-        // Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-
-        //Bookings Routes
-        // Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-        // Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-        // Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
-        // Route::get('/bookings/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-        // Route::post('/bookings/{id}', [BookingController::class, 'update'])->name('bookings.update');
-        // Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+        
     });
 
-//frontend Routes
-Route::get('/hotel', [FrontendController::class, 'index'])->name('frontend.index');
-Route::get('/hotel/create', [FrontendController::class, 'create'])->name('frontend.create');
-Route::post('/hotel/store', [FrontendController::class, 'store'])->name('frontend.store');
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/hotel.php';

@@ -7,6 +7,7 @@ use App\Http\Controllers\Staff\PackageController;
 use App\Http\Controllers\Hotel\HotelownerController;
 use App\Http\Controllers\Hotel\HotelRoleController;
 use App\Http\Controllers\Hotel\StaffController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 //login route
@@ -17,6 +18,10 @@ Route::post('/staff/logout', [HotelownerController::class, 'logout'])->name('hot
 
 Route::prefix('staff')->middleware('auth:staffs')->group(function () {
     Route::get('/dashboard', [HotelownerController::class, 'index'])->name('staff.dashboard');
+
+     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/packages', [PackageController::class, 'index'])->name('staffpackages.index');
     Route::get('/packages/create', [PackageController::class, 'create'])->name('staffpackages.create');

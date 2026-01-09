@@ -59,7 +59,7 @@ class PackageController extends Controller implements HasMiddleware
             'status' => 'required|in:active,inactive',
             'price' => 'required|numeric'
         ]);
-
+        if($validator->passes()){
         Package::create([
             'hotel_id' => $hotelId,
             'package_name' => $request->package_name,
@@ -68,7 +68,10 @@ class PackageController extends Controller implements HasMiddleware
         ]);
         return redirect()->route('staffpackages.index')->with('success', 'Packages created successfully');
     }
-
+    else{
+        return back()->withInput()->withErrors($validator);
+    }
+    }
     /**
      * Display the specified resource.
      */
@@ -100,9 +103,8 @@ class PackageController extends Controller implements HasMiddleware
             'status' => 'required|in:active,inactive',
             'price' => 'required|numeric'
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('staffpackages.index')->withInput()->withErrors($validator);
-        }
+        if ($validator->passes()) {
+
         // $package->hotel_id=$request->hotel_id;
 
         $package->package_name = $request->package_name;
@@ -112,6 +114,10 @@ class PackageController extends Controller implements HasMiddleware
 
 
         return redirect()->route('staffpackages.index')->with('success', 'Packages created successfully');
+    }
+    else{
+        return redirect()->route('staffpackages.index')->withInput()->withErrors($validator);
+        }
     }
 
     /**

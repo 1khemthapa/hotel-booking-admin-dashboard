@@ -60,6 +60,7 @@ class CustomerController extends Controller implements HasMiddleware
             'address' => 'required|max:255',
             'hotel_id' => 'sometimes|nullable'
         ]);
+        if($validator->passes()){
         Customer::create([
             'full_name' => $request->full_name,
             'hotel_id' => $hotelId,
@@ -69,6 +70,10 @@ class CustomerController extends Controller implements HasMiddleware
             'dob' => $request->dob,
         ]);
         return redirect()->route('staffcustomers.index')->with('success', 'Customer created successfully');
+    }
+    else{
+        return back()->withInput()->withErrors($validator);
+    }
     }
 
     /**

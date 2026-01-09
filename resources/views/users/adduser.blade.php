@@ -22,7 +22,7 @@
         <input type="text"
                name="name"
                placeholder="Enter full name"
-               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm ">
+               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm " required>
     </div>
 
 
@@ -34,7 +34,7 @@
         <input type="email"
                name="email"
                placeholder="example@email.com"
-               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+               class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" required>
     </div>
 
 
@@ -47,7 +47,7 @@
         name="roles"
         id="roles"
         class=" rounded border-gray-300 cursor-pointer focus:border-indigo-500 focus:ring-indigo-500 w-full "
-    >
+    required>
         <option value="" >Select role</option>
 
         @foreach ($roles as $role)
@@ -66,7 +66,13 @@
         <label class="block text-sm font-medium mb-1">
             Password
         </label>
-        <input type="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+        <input type="password" name="password" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" required>
+    </div>
+    <div >
+        <label class="block text-sm font-medium mb-1">
+           Confirm Password
+        </label>
+        <input type="password" name="password_confirmation" class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" required>
     </div>
     <div >
         <label class="block text-sm font-medium mb-1">
@@ -75,7 +81,7 @@
         <input name="address"
 
                   placeholder="Enter address"
-                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></input>
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"></input required>
     </div>
 
         </div>

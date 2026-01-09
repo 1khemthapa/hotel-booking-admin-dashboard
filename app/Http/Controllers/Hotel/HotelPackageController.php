@@ -51,13 +51,17 @@ class HotelPackageController extends Controller
             'price' => 'required|numeric'
         ]);
 
-        Package::create([
-            'hotel_id' => $hotelId,
-            'package_name' => $request->package_name,
-            'status' => $request->status,
-            'price' => $request->price,
-        ]);
-        return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
+        if ($validator->passes()) {
+            Package::create([
+                'hotel_id' => $hotelId,
+                'package_name' => $request->package_name,
+                'status' => $request->status,
+                'price' => $request->price,
+            ]);
+            return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
+        } else {
+            return back()->withInput()->withErrors($validator);
+        }
     }
 
     /**
@@ -91,18 +95,17 @@ class HotelPackageController extends Controller
             'status' => 'required|in:active,inactive',
             'price' => 'required|numeric'
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('hotelpackages.index')->withInput()->withErrors($validator);
+        if ($validator->passes()) {
+            $package->package_name = $request->package_name;
+            $package->status = $request->status;
+            $package->price = $request->price;
+            $package->save();
+
+
+            return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
+        } else {
+            return redirect()->route('hotelpackages.index')->withInput()->withError($validator);
         }
-        // $package->hotel_id=$request->hotel_id;
-
-        $package->package_name = $request->package_name;
-        $package->status = $request->status;
-        $package->price = $request->price;
-        $package->save();
-
-
-        return redirect()->route('hotelpackages.index')->with('success', 'Packages created successfully');
     }
 
     /**

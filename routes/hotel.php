@@ -8,6 +8,7 @@ use App\Http\Controllers\Hotel\HotelownerController;
 use App\Http\Controllers\Hotel\HotelRoleController;
 use App\Http\Controllers\Hotel\StaffController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ProfileController;
 
 //login route
 Route::get('/stafflogin', [HotelownerController::class,'login'])->name('hotel.login');
@@ -17,6 +18,10 @@ Route::post('/owner/logout',[HotelownerController::class,'logout'])->name('hotel
 Route::prefix('owner')->middleware('auth:hotels')->group(function () {
 
     Route::get('/loggedin',[HotelownerController::class,'show'])->name('owner.show');
+
+     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
      Route::get('/packages',[HotelPackageController::class,'index'])->name('hotelpackages.index');
         Route::get('/packages/create',[HotelPackageController::class,'create'])->name('hotelpackages.create');

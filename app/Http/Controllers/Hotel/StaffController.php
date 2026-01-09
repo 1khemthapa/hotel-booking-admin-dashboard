@@ -50,20 +50,24 @@ class StaffController extends Controller
             'email' => 'required',
             'contact' => 'required|max:20',
             'address' => 'required',
-            'password' => 'required|min:8',
-            'hotel_id' => 'required|exists'
+            'password' => 'required|min:8|confirmed',
+
         ]);
+        if($validator->passes()){
         $staff =  Staff::create([
             'name' => $request->name,
             'email' => $request->email,
             'contact' => $request->contact,
-            'password' => bcrypt('password'),
+            'password' => bcrypt($request->password),
             'address' => $request->address,
             'hotel_id'=>$hotelId,
 
         ]);
         $staff->assignRole($request->roles);
         return redirect()->route('hotelstaffs.index')->with('success', 'Staffs created successfully');
+    }else{
+        return back()->withInput()->withErrors($validator);
+    }
     }
 
     /**
@@ -96,11 +100,14 @@ class StaffController extends Controller
             'contact' => 'required|max:20',
             'address' => 'required'
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('hotelstaffs.edit', $staff->id)->withInput()->withErrors($validator);
-        }
+        if ($validator->passes()) {
+
         $staff->update($validator->validated());
         return redirect()->route('hotelstaffs.index', compact('staff'))->with('success', 'Staff updated successfully');
+    }
+    else{
+        return redirect()->route('hotelstaffs.edit', $staff->id)->withInput()->withErrors($validator);
+        }
     }
 
     /**

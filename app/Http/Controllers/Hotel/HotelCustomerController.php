@@ -28,11 +28,11 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function index()
     {
-            $users=Auth::guard('hotels')->user();
-            $customers=$users->customers()->latest()->paginate(7);
+        $users = Auth::guard('hotels')->user();
+        $customers = $users->customers()->latest()->paginate(7);
 
         // $customers=Customer::latest()->paginate(10);
-        return view('Hotel.customers.listcustomers',compact('customers'));
+        return view('Hotel.customers.listcustomers', compact('customers'));
     }
 
     /**
@@ -40,7 +40,7 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function create()
     {
-         $hotels=Hotel::get();
+        $hotels = Hotel::get();
         return view('Hotel.customers.createcustomers');
     }
 
@@ -49,24 +49,28 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function store(Request $request)
     {
-        $hotelId=Auth::guard('hotels')->id();
+        $hotelId = Auth::guard('hotels')->id();
         // dd($hotelId);
-        $validator=Validator::make($request->all(),[
-            'full_name'=>'required|max-255',
-            'contact'=>'required|numeric',
-            'email'=>'required',
-            'address'=>'required|max:255',
-            'hotel_id'=>'sometimes|nullable'
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|max-255',
+            'contact' => 'required|numeric',
+            'email' => 'required',
+            'address' => 'required|max:255',
+            'hotel_id' => 'sometimes|nullable'
         ]);
-        Customer::create([
-        'full_name'=>$request->full_name,
-        'hotel_id'=>$hotelId,
-        'contact'=>$request->contact,
-        'email'=>$request->email,
-        'address'=>$request->address,
-        'dob'=>$request->dob,
-        ]);
-        return redirect()->route('hotelcustomers.index')->with('success','Customer created successfully');
+        if ($validator->passes()) {
+            Customer::create([
+                'full_name' => $request->full_name,
+                'hotel_id' => $hotelId,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'address' => $request->address,
+                'dob' => $request->dob,
+            ]);
+            return redirect()->route('hotelcustomers.index')->with('success', 'Customer created successfully');
+        } else {
+            return back()->withInput()->withErrors($validator);
+        }
     }
 
     /**
@@ -82,8 +86,8 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function edit(string $id)
     {
-        $customer=Customer::findorfail($id);
-        return view('Hotel.customers.editcustomer',compact('customer'));
+        $customer = Customer::findorfail($id);
+        return view('Hotel.customers.editcustomer', compact('customer'));
     }
 
     /**
@@ -91,22 +95,24 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function update(Request $request, string $id)
     {
-        $customer=Customer::findorfail($id);
-        $validator=Validator::make($request->all(),[
-            'full_name'=>'required|max:255',
-            'contact'=>'required|numeric',
-            'email'=>'required',
-            'address'=>'required|max:255',
+        $customer = Customer::findorfail($id);
+        $validator = Validator::make($request->all(), [
+            'full_name' => 'required|max:255',
+            'contact' => 'required|numeric',
+            'email' => 'required',
+            'address' => 'required|max:255',
         ]);
-        if($validator->fails()){
+        if ($validator->passes()) {
+
+            $customer->full_name = $request->full_name;
+            $customer->contact = $request->contact;
+            $customer->email = $request->email;
+            $customer->address = $request->address;
+            $customer->save();
+            return redirect()->route('hotelcustomers.index')->with('success', 'Customer updated successfully');
+        } else {
             return redirect()->route('hotelcustomers.create')->withInput()->withErrors($validator);
         }
-        $customer->full_name=$request->full_name;
-        $customer->contact=$request->contact;
-        $customer->email=$request->email;
-        $customer->address=$request->address;
-        $customer->save();
-        return redirect()->route('hotelcustomers.index')->with('success','Customer updated successfully');
     }
 
     /**
@@ -114,8 +120,8 @@ class HotelCustomerController extends Controller //implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        $customer=Customer::findorfail($id);
+        $customer = Customer::findorfail($id);
         $customer->delete();
-        return redirect()->route('hotelcustomers.index')->with('success','Customer deleted successfully');
+        return redirect()->route('hotelcustomers.index')->with('success', 'Customer deleted successfully');
     }
 }

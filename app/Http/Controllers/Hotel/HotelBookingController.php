@@ -29,13 +29,13 @@ class HotelBookingController extends Controller //implements HasMiddleware
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
-        $user=Auth::guard('hotels')->user();
+        $user = Auth::guard('hotels')->user();
 
-        $bookings=$user->bookings()->latest()->paginate(7);
-    return view('Hotel.bookings.listbookings',compact('bookings'));
+        $bookings = $user->bookings()->latest()->paginate(7);
+        return view('Hotel.bookings.listbookings', compact('bookings'));
     }
 
     /**
@@ -43,11 +43,11 @@ class HotelBookingController extends Controller //implements HasMiddleware
      */
     public function create()
     {
-        $hotels=Auth::guard('hotels')->user();
-        $customers=$hotels->customers()->latest()->get();
+        $hotels = Auth::guard('hotels')->user();
+        $customers = $hotels->customers()->latest()->get();
 
-        $packages=$hotels->packages()->latest()->get();
-        return view('Hotel.bookings.createbookings',compact('customers','packages'));
+        $packages = $hotels->packages()->latest()->get();
+        return view('Hotel.bookings.createbookings', compact('customers', 'packages'));
     }
 
     /**
@@ -55,29 +55,29 @@ class HotelBookingController extends Controller //implements HasMiddleware
      */
     public function store(Request $request)
     {
-        $hotelId=Auth::guard('hotels')->id();
-        $validator=Validator::make($request->all(),[
-            'hotel_id'=>'required|exists:hotels,id',
-            'customer_id'=>'sometimes|nullable|exists:customers,id',
-            'package_id'=>'sometimes|nullable|exists:table,id',
-            'customer_name'=>'sometimes|nullable',
-            'pax'=>'required|numeric',
-            'booked_date'=>'required',
-            'check_in_date'=>'required',
-            'check_out_date'=>'required,'
+        $hotelId = Auth::guard('hotels')->id();
+        $validator = Validator::make($request->all(), [
+            'hotel_id' => 'required|exists:hotels,id',
+            'customer_id' => 'sometimes|nullable|exists:customers,id',
+            'package_id' => 'sometimes|nullable|exists:table,id',
+            'customer_name' => 'sometimes|nullable',
+            'pax' => 'required|numeric',
+            'booked_date' => 'required',
+            'check_in_date' => 'required',
+            'check_out_date' => 'required,'
         ]);
         Booking::create([
-            'hotel_id'=>$hotelId,
-            'customer_id'=>$request->customer_id,
-            'customer_name'=>$request->customer_name,
-            'package_id'=>$request->package_id,
-            'pax'=>$request->pax,
-            'booked_date'=>$request->booked_date,
-            'check_in_date'=>$request->check_in_date,
-            'check_out_date'=>$request->check_out_date,
-            'notes'=>$request->notes,
+            'hotel_id' => $hotelId,
+            'customer_id' => $request->customer_id,
+            'customer_name' => $request->customer_name,
+            'package_id' => $request->package_id,
+            'pax' => $request->pax,
+            'booked_date' => $request->booked_date,
+            'check_in_date' => $request->check_in_date,
+            'check_out_date' => $request->check_out_date,
+            'notes' => $request->notes,
         ]);
-        return redirect()->route('hotelbookings.index')->with('success','Bookings created successfully');
+        return redirect()->route('hotelbookings.index')->with('success', 'Bookings created successfully');
     }
 
     /**
@@ -93,12 +93,12 @@ class HotelBookingController extends Controller //implements HasMiddleware
      */
     public function edit(string $id)
     {
-        $hotels=Auth::guard('hotels')->user();
-        $customers=$hotels->customers()->get();
+        $hotels = Auth::guard('hotels')->user();
+        $customers = $hotels->customers()->get();
 
-        $packages=$hotels->packages()->get();
-        $booking=Booking::findorfail($id);
-        return view('Hotel.bookings.editbookings',compact('booking','customers','hotels','packages'));
+        $packages = $hotels->packages()->get();
+        $booking = Booking::findorfail($id);
+        return view('Hotel.bookings.editbookings', compact('booking', 'customers', 'hotels', 'packages'));
     }
 
     /**
@@ -106,24 +106,25 @@ class HotelBookingController extends Controller //implements HasMiddleware
      */
     public function update(Request $request, string $id)
     {
-        $booking=Booking::findorfail($id);
-        $validator=Validator::make($request->all(),[
+        $booking = Booking::findorfail($id);
+        $validator = Validator::make($request->all(), [
 
-            'customer_id'=>'required|exists:customers,id',
-            'package_id'=>'required|exists:packages,id',
-            'customer_name'=>'sometimes|nullable',
-            'pax'=>'numeric',
-            'booked_date'=>'required',
-            'check_in_date'=>'required',
-            'check_out_date'=>'required',
+            'customer_id' => 'required|exists:customers,id',
+            'package_id' => 'required|exists:packages,id',
+            'customer_name' => 'sometimes|nullable',
+            'pax' => 'numeric',
+            'booked_date' => 'required',
+            'check_in_date' => 'required',
+            'check_out_date' => 'required',
 
         ]);
-       if($validator->fails()){
-        return redirect()->route('hotelbookings.index')->withInput()->withErrors($validator);
-       }
-       $booking->update($validator->validated(),['hotel_id'=>$booking->hotel_id]);
+        if ($validator->passes()) {
+            $booking->update($validator->validated(), ['hotel_id' => $booking->hotel_id]);
 
-        return redirect()->route('hotelbookings.index')->with('success','Bookings updated successfully');
+            return redirect()->route('hotelbookings.index')->with('success', 'Bookings updated successfully');
+        } else {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
     }
 
     /**
@@ -131,8 +132,8 @@ class HotelBookingController extends Controller //implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        $booking=Booking::findorfail($id);
+        $booking = Booking::findorfail($id);
         $booking->delete();
-        return redirect()->route('hotelbookings.index')->with('success','Booking deleted successfully');
+        return redirect()->route('hotelbookings.index')->with('success', 'Booking deleted successfully');
     }
 }

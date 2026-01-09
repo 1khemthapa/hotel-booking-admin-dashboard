@@ -66,6 +66,7 @@ class BookingController extends Controller implements HasMiddleware
             'check_in_date' => 'required',
             'check_out_date' => 'required,'
         ]);
+        if($validator->passes()){
         Booking::create([
             'hotel_id' => $hotelId,
             'customer_id' => $request->customer_id,
@@ -78,6 +79,10 @@ class BookingController extends Controller implements HasMiddleware
             'notes' => $request->notes,
         ]);
         return redirect()->route('staffbookings.index')->with('success', 'Bookings created successfully');
+    }
+    else{
+        return back()->withInput()->withErrors($validator);
+    }
     }
 
     /**
@@ -118,12 +123,15 @@ class BookingController extends Controller implements HasMiddleware
             'check_out_date' => 'required',
 
         ]);
-        if ($validator->fails()) {
-            return redirect()->route('staffbookings.index')->withInput()->withErrors($validator);
-        }
+        if ($validator->passes()) {
+
         $booking->update($validator->validated(), ['hotel_id' => $booking->hotel_id]);
 
         return redirect()->route('staffbookings.index')->with('success', 'Bookings updated successfully');
+    }
+    else{
+        return redirect()->route('staffbookings.index')->withInput()->withErrors($validator);
+        }
     }
 
     /**

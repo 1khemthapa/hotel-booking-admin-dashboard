@@ -62,7 +62,7 @@
                 value="{{ $role->name }}"
                 {{ isset($user) && $user->hasRole($role->name) ? 'selected' : '' }}
             >
-                {{ $role->name }}
+                {{ $role->display_name }}
             </option>
         @endforeach
     </select>
@@ -81,6 +81,14 @@
             Password
         </label>
         <input type="password" name="password"
+                  placeholder="Enter password"
+                  class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"/>
+    </div>
+    <div >
+        <label class="block text-sm font-medium ">
+           Confirm Password
+        </label>
+        <input type="password" name="password_confirmation"
                   placeholder="Enter password"
                   class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"/>
     </div>

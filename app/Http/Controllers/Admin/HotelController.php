@@ -60,24 +60,26 @@ return [
             'address'=>'required',
             'email'=>'required',
             'username'=>'required',
+            'password'=>'required|min:8|confirmed'
 
         ]);
-        if ($validator->fails()) {
-    return back()->withErrors($validator)->withInput();
-}
+        if ($validator->passes()) {
+
         $hotel=Hotel::create([
             'name'=>$request->name,
             'contact'=>$request->contact,
             'address'=>$request->address,
             'email'=>$request->email,
             'username'=>$request->username,
-            'password'=>bcrypt('password'),
+            'password'=>bcrypt($request->password),
             'status'=>$request->status,
 
         ]);
 
-        //  $hotel->assignRole($request->role);
         return redirect()->route('hotels.index')->with('success','Hotel created successfully');
+    }else{
+        return back()->withErrors($validator)->withInput();
+}
     }
 
     /**
@@ -110,9 +112,8 @@ return [
             'email'=>'required',
 
         ]);
-        if($validator->fails()){
-            return redirect()->route('hotels.edit')->withInput()->withErrors($validator);
-        }
+        if($validator->passes()){
+
             $hotel->name=$request->name;
             $hotel->contact=$request->contact;
             $hotel->address=$request->address;
@@ -124,6 +125,10 @@ return [
         $hotel->syncRoles([$request->role]);
             return redirect()->route('hotels.index')->with('success','Hotel updated successfully');
 
+    }
+    else{
+        return redirect()->route('hotels.edit')->withInput()->withErrors($validator);
+        }
     }
 
     /**

@@ -63,8 +63,7 @@ class HotelRoleController extends Controller //implements HasMiddleware
 
         if ($validator->passes()) {
 
-            $slug="hotel-".Auth::guard("hotels")->user()->id."-".Str::slug($request->display_name);
-
+            $slug = "hotel-" . Auth::guard("hotels")->user()->id . "-" . Str::slug($request->display_name);
             $hotelId = Auth::guard('hotels')->id();
             $role = Role::create([
                 'display_name' => $request->display_name,
@@ -102,7 +101,7 @@ class HotelRoleController extends Controller //implements HasMiddleware
         ]);
         if ($validator->passes()) {
             $role->display_name = $request->display_name;
-            $role->name=Str::slug($request->display_name);
+            $role->name = Str::slug($request->display_name);
 
             $role->save();
             if (!empty($request->permission)) {

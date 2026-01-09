@@ -52,18 +52,24 @@ class UserController extends Controller //implements HasMiddleware
         $validator=Validator::make($request->all(),[
             'name'=>'required|max:50',
             'email'=>'required',
+            'password'=>'required|min:8|confirmed',
 
 
         ]);
+
+        if($validator->passes()){
 
         $user=User::create([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>bcrypt('password'),
+            'password'=>bcrypt($request->password),
 
         ]);
         $user->assignRole($request->roles);
-        return redirect()->route('users.index')->with('success','User created successfully');
+        return redirect()->route('users.index')->with('success','User created successfully');}
+        else{
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
 
     }
 
@@ -95,9 +101,8 @@ class UserController extends Controller //implements HasMiddleware
             'name'=>'required|min:3',
             'email'=>'required|email|unique:users,email,'.$id.',id'
         ]);
-        if($validator->fails()){
-            return redirect()->route('users.edit',$id)->withInput()->withErrors($validator);
-        }
+        if($validator->passes()){
+
         $user->name=$request->name;
         $user->email=$request->email;
         $user->address=$request->address;
@@ -107,6 +112,10 @@ class UserController extends Controller //implements HasMiddleware
         $user->syncRoles($request->roles);
         return redirect()->route('users.index')->with('success','User updated successfully');
 
+    }
+    else{
+        return redirect()->route('users.edit',$id)->withInput()->withErrors($validator);
+        }
     }
 
     /**
